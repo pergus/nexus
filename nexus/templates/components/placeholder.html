@@ -1,0 +1,13 @@
+{# Reusable placeholder component #}
+{# Usage: {% include 'components/placeholder.html' with type="default" size="6" color="primary" glow=False %} #}
+
+{% if type == "image" %}
+  <svg class="bd-placeholder-img{% if classes %} {{ classes }}{% endif %}" width="{{ width|default:'100%' }}" height="{{ height|default:'180' }}"
+      xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder"
+      preserveAspectRatio="xMidYMid slice" focusable="false">
+      <title>Placeholder</title>
+      <rect width="100%" height="100%" fill="{{ color|default:'#868e96' }}"></rect>
+  </svg>
+{% else %}
+  <span class="placeholder{% if glow %} placeholder-glow{% endif %}{% if size %}{% if size|length > 2 %} {{ size }}{% else %} col-{{ size }}{% endif %}{% endif %}{% if color %} bg-{{ color }}{% endif %}{% if width %} {{ width }}{% endif %}{% if classes %} {{ classes }}{% endif %}"></span>
+{% endif %}

@@ -1,0 +1,108 @@
+{# Reusable form group component #}
+{# Usage: {% include 'components/form_group.html' with label="Username" input_type="text" name="username" required=True %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label for="{{ id|default:name }}" class="form-label{% if label_class %} {{ label_class }}{% endif %}">{{ label }}{% if required %} <span class="text-danger">*</span>{% endif %}</label>
+  {% endif %}
+
+  {% if input_type == "select" %}
+    <select
+      class="form-select{% if size %} form-select-{{ size }}{% endif %}{% if validation_state %} is-{{ validation_state }}{% endif %}{% if input_class %} {{ input_class }}{% endif %}"
+      id="{{ id|default:name }}"
+      name="{{ name }}"
+      {% if required %}required{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if multiple %}multiple{% endif %}
+      {% if size_attr %}size="{{ size_attr }}"{% endif %}
+      {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+      {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+    >
+      {% if placeholder %}
+        <option value=""{% if not selected_value %} selected{% endif %}>{{ placeholder }}</option>
+      {% endif %}
+
+      {% for option in options %}
+        {% if option.group %}
+          <optgroup label="{{ option.group }}">
+            {% for sub_option in option.options %}
+              <option value="{{ sub_option.value }}"{% if sub_option.selected or sub_option.value == selected_value %} selected{% endif %}{% if sub_option.disabled %} disabled{% endif %}>{{ sub_option.text }}</option>
+            {% endfor %}
+          </optgroup>
+        {% else %}
+          <option value="{{ option.value }}"{% if option.selected or option.value == selected_value %} selected{% endif %}{% if option.disabled %} disabled{% endif %}>{{ option.text|default:option }}</option>
+        {% endif %}
+      {% endfor %}
+    </select>
+  {% elif input_type == "textarea" %}
+    <textarea
+      class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if validation_state %} is-{{ validation_state }}{% endif %}{% if input_class %} {{ input_class }}{% endif %}"
+      id="{{ id|default:name }}"
+      name="{{ name }}"
+      {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+      {% if rows %}rows="{{ rows }}"{% endif %}
+      {% if cols %}cols="{{ cols }}"{% endif %}
+      {% if required %}required{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if readonly %}readonly{% endif %}
+      {% if minlength %}minlength="{{ minlength }}"{% endif %}
+      {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
+      {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+      {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+    >{{ value|default:"" }}</textarea>
+  {% elif input_type == "checkbox" or input_type == "radio" %}
+    <div class="form-check{% if inline %} form-check-inline{% endif %}{% if switch and input_type == "checkbox" %} form-switch{% endif %}{% if color %} form-{{ input_type }}-{{ color }}{% endif %}">
+      <input
+        class="form-check-input{% if input_class %} {{ input_class }}{% endif %}"
+        type="{{ input_type }}"
+        id="{{ id|default:name }}{% if input_type == "radio" %}_{{ value|slugify }}{% endif %}"
+        name="{{ name }}"
+        {% if value and input_type == "radio" %}value="{{ value }}"{% endif %}
+        {% if checked %}checked{% endif %}
+        {% if required %}required{% endif %}
+        {% if disabled %}disabled{% endif %}
+        {% if switch and input_type == "checkbox" %}role="switch"{% endif %}
+        {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+        {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+      >
+      {% if input_label %}
+        <label class="form-check-label{% if label_class %} {{ label_class }}{% endif %}" for="{{ id|default:name }}{% if input_type == "radio" %}_{{ value|slugify }}{% endif %}">
+          {{ input_label }}
+          {% if required %}<span class="text-danger">*</span>{% endif %}
+        </label>
+      {% endif %}
+    </div>
+  {% else %}
+    <input
+      type="{{ input_type|default:'text' }}"
+      class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if validation_state %} is-{{ validation_state }}{% endif %}{% if input_class %} {{ input_class }}{% endif %}"
+      id="{{ id|default:name }}"
+      name="{{ name }}"
+      {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+      {% if value %}value="{{ value }}"{% endif %}
+      {% if required %}required{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if readonly %}readonly{% endif %}
+      {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+      {% if min %}min="{{ min }}"{% endif %}
+      {% if max %}max="{{ max }}"{% endif %}
+      {% if minlength %}minlength="{{ minlength }}"{% endif %}
+      {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
+      {% if pattern %}pattern="{{ pattern }}"{% endif %}
+      {% if step %}step="{{ step }}"{% endif %}
+      {% if autofocus %}autofocus{% endif %}
+      {% if multiple %}multiple{% endif %}
+      {% if list %}list="{{ list }}"{% endif %}
+      {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+      {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+    >
+  {% endif %}
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+
+  {% if validation_message %}
+    <div class="{% if validation_state == "valid" %}valid{% else %}invalid{% endif %}-feedback">{{ validation_message }}</div>
+  {% endif %}
+</div>

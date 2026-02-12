@@ -1,0 +1,17 @@
+{# Reusable breadcrumb component #}
+{# Usage: {% include 'components/breadcrumb.html' with items=breadcrumb_items divider=">" %} #}
+{# breadcrumb_items should be a list of dictionaries with 'text' and optionally 'url' and 'active' keys #}
+
+<nav{% if divider %} style="--bs-breadcrumb-divider: '{{ divider }}';"{% endif %} aria-label="breadcrumb">
+  <ol class="breadcrumb{% if classes %} {{ classes }}{% endif %}">
+    {% for item in items %}
+      <li class="breadcrumb-item{% if item.active %} active{% endif %}"{% if item.active %} aria-current="page"{% endif %}>
+        {% if item.url and not item.active %}
+          <a href="{{ item.url }}">{{ item.text }}</a>
+        {% else %}
+          {{ item.text }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ol>
+</nav>

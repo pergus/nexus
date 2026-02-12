@@ -1,0 +1,86 @@
+{# Reusable candlestick chart component #}
+{# Usage: {% include 'components/chart_candlestick.html' with chart_id="my-candlestick-chart" series_data=series_data chart_title="My Candlestick Chart" height=380 %} #}
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title mb-0">{{ chart_title|default:"Candlestick Chart" }}</h4>
+  </div>
+  <div class="card-body">
+    <div dir="ltr">
+      <div id="{{ chart_id|default:'apex-candlestick-chart' }}" class="apex-charts" style="min-height: {{ height|default:380 }}px;"></div>
+    </div>
+  </div>
+</div>
+
+{# Script to initialize the chart - should be placed in the template where this component is used #}
+{# Example initialization script:
+<script>
+  var options = {
+    chart: {
+      height: {{ height|default:380 }},
+      type: 'candlestick',
+      toolbar: { show: false }
+    },
+    series: {{ series_data|safe }},
+    xaxis: {
+      type: 'datetime',
+      title: {
+        text: '{{ xaxis_title|default:"Date" }}'
+      }
+    },
+    yaxis: {
+      tooltip: {
+        enabled: true
+      },
+      title: {
+        text: '{{ yaxis_title|default:"Price" }}'
+      }
+    },
+    tooltip: {
+      enabled: true,
+      fixed: {
+        enabled: true,
+        position: 'topLeft',
+        offsetX: 0,
+        offsetY: 30,
+      },
+    },
+    plotOptions: {
+      candlestick: {
+        colors: {
+          upward: '{{ upward_color|default:"#00b19d" }}',
+          downward: '{{ downward_color|default:"#f1556c" }}'
+        },
+        wick: {
+          useFillColor: true
+        }
+      }
+    },
+    colors: {{ colors|default:"['#00b19d', '#f1556c']"|safe }},
+    grid: {
+      borderColor: '#f1f3fa',
+      padding: {
+        bottom: 5
+      }
+    },
+    legend: {
+      position: "{{ legend_position|default:'top' }}",
+      horizontalAlign: "{{ legend_align|default:'right' }}",
+      offsetY: {{ legend_offset_y|default:0 }},
+      offsetX: {{ legend_offset_x|default:0 }}
+    },
+    responsive: [{
+      breakpoint: 600,
+      options: {
+        chart: {
+          toolbar: { show: false }
+        },
+        legend: { show: false }
+      }
+    }]
+  };
+
+  var chart = new ApexCharts(document.querySelector("#{{ chart_id|default:'apex-candlestick-chart' }}"), options);
+  chart.render();
+</script>
+#}

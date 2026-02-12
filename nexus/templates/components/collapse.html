@@ -1,0 +1,38 @@
+{# Reusable collapse component #}
+{# Usage: {% include 'components/collapse.html' with id="collapseExample" content="Collapsed content" button_text="Toggle" horizontal=False multi_targets=False %} #}
+
+<!-- Trigger button/link -->
+{% if trigger_type == "link" %}
+  <a class="btn{% if btn_class %} {{ btn_class }}{% endif %}"
+     data-bs-toggle="collapse"
+     href="#{{ id|default:'collapse' }}"
+     role="button"
+     aria-expanded="false"
+     aria-controls="{{ id|default:'collapse' }}">
+    {{ button_text|default:"Toggle" }}
+  </a>
+{% else %}
+  <button class="btn{% if btn_class %} {{ btn_class }}{% endif %}"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#{{ id|default:'collapse' }}"
+          aria-expanded="false"
+          aria-controls="{{ id|default:'collapse' }}">
+    {{ button_text|default:"Toggle" }}
+  </button>
+{% endif %}
+
+<!-- Collapse content -->
+<div style="{% if horizontal %}min-height: 135px;{% endif %}">
+  <div class="collapse{% if horizontal %} collapse-horizontal{% endif %}{% if multi_collapse %} multi-collapse{% endif %}{% if classes %} {{ classes }}{% endif %}"
+       id="{{ id|default:'collapse' }}"
+       {% if multi_controls %}aria-controls="{{ multi_controls }}"{% endif %}>
+    {% if card %}
+      <div class="card card-body mb-0{% if card_classes %} {{ card_classes }}{% endif %}"{% if card_style %} style="{{ card_style }}"{% endif %}>
+        {{ content|default:"Collapse content" }}
+      </div>
+    {% else %}
+      {{ content|default:"Collapse content" }}
+    {% endif %}
+  </div>
+</div>

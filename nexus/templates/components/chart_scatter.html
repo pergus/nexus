@@ -1,0 +1,86 @@
+{# Reusable scatter chart component #}
+{# Usage: {% include 'components/chart_scatter.html' with chart_id="my-scatter-chart" series_data=series_data chart_title="My Scatter Chart" height=380 %} #}
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title mb-0">{{ chart_title|default:"Scatter Chart" }}</h4>
+  </div>
+  <div class="card-body">
+    <div dir="ltr">
+      <div id="{{ chart_id|default:'apex-scatter-chart' }}" class="apex-charts" style="min-height: {{ height|default:380 }}px;"></div>
+    </div>
+  </div>
+</div>
+
+{# Script to initialize the chart - should be placed in the template where this component is used #}
+{# Example initialization script:
+<script>
+  var options = {
+    chart: {
+      height: {{ height|default:380 }},
+      type: 'scatter',
+      zoom: {
+        enabled: true,
+        type: 'xy'
+      },
+      toolbar: { show: false }
+    },
+    series: {{ series_data|safe }},
+    xaxis: {
+      tickAmount: {{ xaxis_tick_amount|default:10 }},
+      title: {
+        text: '{{ xaxis_title|default:"" }}'
+      }
+    },
+    yaxis: {
+      tickAmount: {{ yaxis_tick_amount|default:7 }},
+      title: {
+        text: '{{ yaxis_title|default:"" }}'
+      }
+    },
+    legend: {
+      position: "{{ legend_position|default:'top' }}",
+      horizontalAlign: "{{ legend_align|default:'right' }}",
+      offsetY: {{ legend_offset_y|default:0 }},
+      offsetX: {{ legend_offset_x|default:0 }}
+    },
+    markers: {
+      size: {{ marker_size|default:6 }},
+      hover: {
+        size: {{ marker_hover_size|default:8 }}
+      }
+    },
+    tooltip: {
+      x: {
+        formatter: function(val) {
+          return val + " {{ tooltip_x_unit|default:"" }}";
+        }
+      },
+      y: {
+        formatter: function(val) {
+          return val + " {{ tooltip_y_unit|default:"" }}";
+        }
+      }
+    },
+    colors: {{ colors|default:"['#6658dd', '#4fc6e1', '#4a81d4', '#00b19d', '#f1556c']"|safe }},
+    grid: {
+      borderColor: '#f1f3fa',
+      padding: {
+        bottom: 5
+      }
+    },
+    responsive: [{
+      breakpoint: 600,
+      options: {
+        chart: {
+          toolbar: { show: false }
+        },
+        legend: { show: false }
+      }
+    }]
+  };
+
+  var chart = new ApexCharts(document.querySelector("#{{ chart_id|default:'apex-scatter-chart' }}"), options);
+  chart.render();
+</script>
+#}

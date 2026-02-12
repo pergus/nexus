@@ -1,0 +1,8 @@
+{# Reusable avatar component #}
+{# Usage: {% include 'components/avatar.html' with src="/path/to/image.jpg" alt="User Name" size="md" rounded=True circle=True %} #}
+
+<img src="{{ src|default:'#' }}"
+     alt="{{ alt|default:'Avatar' }}"
+     class="img-fluid{% if size %} avatar-{{ size }}{% endif %}{% if rounded %} rounded{% endif %}{% if circle %} rounded-circle{% endif %}{% if thumbnail %} img-thumbnail{% endif %}{% if classes %} {{ classes }}{% endif %}"
+     {% if width %}width="{{ width }}"{% endif %}
+     {% if height %}height="{{ height }}"{% endif %} />

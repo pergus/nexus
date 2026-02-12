@@ -1,0 +1,24 @@
+{# Reusable card component #}
+{# Usage: {% include 'components/card.html' with title="Card Title" subtitle="Card Subtitle" %} #}
+{# Content goes in the 'card_content' block #}
+
+<div class="card{% if classes %} {{ classes }}{% endif %}">
+  {% if title or subtitle %}
+    <div class="card-header">
+      {% if title %}<h5 class="card-title">{{ title }}</h5>{% endif %}
+      {% if subtitle %}<p class="card-subtitle">{{ subtitle }}</p>{% endif %}
+    </div>
+  {% endif %}
+  <div class="card-body">
+    {% if card_content %}
+      {{ card_content }}
+    {% else %}
+      {% block card_content %}{% endblock %}
+    {% endif %}
+  </div>
+  {% if footer %}
+    <div class="card-footer">
+      {{ footer }}
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,23 @@
+{# Reusable spinner component #}
+{# Usage: {% include 'components/spinner.html' with type="border" color="primary" size="sm" text="Loading..." align="center" in_button=True %} #}
+
+{% if in_button %}
+  <button class="btn btn-{{ button_color|default:'primary' }}{% if button_disabled %} disabled{% endif %}" type="button"{% if button_disabled %} disabled{% endif %}>
+    <span class="spinner-{{ type|default:'border' }}{% if size %} spinner-{{ type|default:'border' }}-{{ size }}{% endif %} me-1" role="status" aria-hidden="true"></span>
+    {{ text|default:"Loading..." }}
+  </button>
+{% else %}
+  <div class="{% if align == "center" %}d-flex justify-content-center{% elif align == "right" %}d-flex justify-content-end{% elif align == "between" %}d-flex align-items-center{% endif %}{% if container_class %} {{ container_class }}{% endif %}">
+    {% if align == "between" and text_position == "before" %}
+      <strong>{{ text|default:"Loading..." }}</strong>
+    {% endif %}
+
+    <div class="spinner-{{ type|default:'border' }}{% if color %} text-{{ color }}{% endif %}{% if size %} spinner-{{ type|default:'border' }}-{{ size }}{% endif %}{% if align == "between" and text_position == "after" %} ms-auto{% endif %}{% if classes %} {{ classes }}{% endif %}" role="status">
+      <span class="visually-hidden">{{ text|default:"Loading..." }}</span>
+    </div>
+
+    {% if align == "between" and text_position == "after" %}
+      <strong>{{ text|default:"Loading..." }}</strong>
+    {% endif %}
+  </div>
+{% endif %}

@@ -4,6 +4,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path('components_app/', include('components_app.urls')),
 ]
 
 if settings.DEBUG:

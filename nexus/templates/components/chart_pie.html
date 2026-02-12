@@ -1,0 +1,52 @@
+{# Reusable pie chart component #}
+{# Usage: {% include 'components/chart_pie.html' with chart_id="my-pie-chart" series_data=series_data chart_title="My Pie Chart" height=320 %} #}
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title mb-0">{{ chart_title|default:"Pie Chart" }}</h4>
+  </div>
+  <div class="card-body">
+    <div dir="ltr">
+      <div id="{{ chart_id|default:'apex-pie-chart' }}" class="apex-charts" style="min-height: {{ height|default:320 }}px;"></div>
+    </div>
+  </div>
+</div>
+
+{# Script to initialize the chart - should be placed in the template where this component is used #}
+{# Example initialization script:
+<script>
+  var options = {
+    chart: {
+      height: {{ height|default:320 }},
+      type: 'pie'
+    },
+    series: {{ series_data|safe }},
+    labels: {{ labels|default:"[]"|safe }},
+    colors: {{ colors|default:"['#6658dd', '#4fc6e1', '#4a81d4', '#00b19d', '#f1556c']"|safe }},
+    legend: {
+      show: true,
+      position: "{{ legend_position|default:'bottom' }}",
+      horizontalAlign: "{{ legend_align|default:'center' }}",
+      verticalAlign: "{{ legend_vertical_align|default:'middle' }}",
+      floating: false,
+      fontSize: "14px",
+      offsetX: 0,
+      offsetY: 7
+    },
+    responsive: [{
+      breakpoint: 600,
+      options: {
+        chart: {
+          height: 240
+        },
+        legend: {
+          show: false
+        }
+      }
+    }]
+  };
+
+  var chart = new ApexCharts(document.querySelector("#{{ chart_id|default:'apex-pie-chart' }}"), options);
+  chart.render();
+</script>
+#}

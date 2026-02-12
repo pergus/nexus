@@ -1,0 +1,15 @@
+{# Reusable link button component #}
+{# Usage: {% include 'components/button_link.html' with label="Click Me" url="/some-page" btn_class="btn-primary" %} #}
+
+<a
+  href="{{ url|default:'#' }}"
+  class="btn{% if btn_class %} {{ btn_class }}{% else %} btn-primary{% endif %}{% if size %} btn-{{ size }}{% endif %}{% if block %} w-100{% endif %}{% if outline %} btn-outline-{{ outline }}{% endif %}{% if disabled %} disabled{% endif %}{% if button_class %} {{ button_class }}{% endif %}"
+  {% if target %}target="{{ target }}"{% endif %}
+  {% if disabled %}aria-disabled="true"{% endif %}
+  {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+>
+  {% if icon %}
+    <i class="{{ icon }}"></i>
+  {% endif %}
+  {{ label|default:"Button" }}
+</a>

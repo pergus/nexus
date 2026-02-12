@@ -1,0 +1,56 @@
+{# Reusable form range component #}
+{# Usage: {% include 'components/form_range.html' with name="volume" label="Volume" min=0 max=100 step=1 value=50 %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label for="{{ id|default:name }}" class="form-label{% if label_class %} {{ label_class }}{% endif %}">
+      {{ label }}
+      {% if required %}<span class="text-danger">*</span>{% endif %}
+    </label>
+  {% endif %}
+
+  <input
+    type="range"
+    class="form-range{% if validation_state %} is-{{ validation_state }}{% endif %}{% if input_class %} {{ input_class }}{% endif %}"
+    id="{{ id|default:name }}"
+    name="{{ name }}"
+    {% if min %}min="{{ min }}"{% endif %}
+    {% if max %}max="{{ max }}"{% endif %}
+    {% if step %}step="{{ step }}"{% endif %}
+    {% if value %}value="{{ value }}"{% endif %}
+    {% if disabled %}disabled{% endif %}
+    {% if required %}required{% endif %}
+    {% if form %}form="{{ form }}"{% endif %}
+    {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+    {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    oninput="updateRangeValue(this)"
+  >
+
+  {% if show_value %}
+    <span id="{{ id|default:name }}-value" class="range-value">{{ value|default:min|default:0 }}</span>
+  {% endif %}
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+
+  {% if validation_message %}
+    <div class="invalid-feedback">{{ validation_message }}</div>
+  {% endif %}
+
+  {% if valid_message %}
+    <div class="valid-feedback">{{ valid_message }}</div>
+  {% endif %}
+</div>
+
+{# Optional script to display the current value #}
+{# Example usage script:
+<script>
+  function updateRangeValue(element) {
+    const valueElement = document.getElementById(element.id + '-value');
+    if (valueElement) {
+      valueElement.textContent = element.value;
+    }
+  }
+</script>
+#}

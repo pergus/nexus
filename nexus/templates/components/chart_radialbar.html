@@ -1,0 +1,98 @@
+{# Reusable radialbar chart component #}
+{# Usage: {% include 'components/chart_radialbar.html' with chart_id="my-radialbar-chart" series_data=series_data chart_title="My Radialbar Chart" height=380 %} #}
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title mb-0">{{ chart_title|default:"Radialbar Chart" }}</h4>
+  </div>
+  <div class="card-body">
+    <div dir="ltr">
+      <div id="{{ chart_id|default:'apex-radialbar-chart' }}" class="apex-charts" style="min-height: {{ height|default:380 }}px;"></div>
+    </div>
+  </div>
+</div>
+
+{# Script to initialize the chart - should be placed in the template where this component is used #}
+{# Example initialization script:
+<script>
+  var options = {
+    chart: {
+      height: {{ height|default:380 }},
+      type: 'radialBar',
+      toolbar: { show: false }
+    },
+    plotOptions: {
+      radialBar: {
+        startAngle: {{ start_angle|default:-135 }},
+        endAngle: {{ end_angle|default:135 }},
+        dataLabels: {
+          name: {
+            fontSize: '{{ name_font_size|default:"16px" }}',
+            color: '{{ name_color|default:"rgba(68, 68, 68, 0.8)" }}',
+            offsetY: {{ name_offset_y|default:120 }}
+          },
+          value: {
+            offsetY: {{ value_offset_y|default:76 }},
+            fontSize: '{{ value_font_size|default:"22px" }}',
+            color: '{{ value_color|default:"undefined" }}',
+            formatter: function (val) {
+              return val + "{{ value_unit|default:"%" }}";
+            }
+          },
+          total: {
+            show: {{ show_total|yesno:"true,false"|default:"false" }},
+            label: '{{ total_label|default:"Total" }}',
+            color: '{{ total_color|default:"#373d3f" }}',
+            formatter: function (w) {
+              // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+              return {{ total_formatter|default:"249" }}
+            }
+          }
+        }
+      }
+    },
+    fill: {
+      type: '{{ fill_type|default:"gradient" }}',
+      gradient: {
+        shade: '{{ gradient_shade|default:"dark" }}',
+        type: '{{ gradient_type|default:"horizontal" }}',
+        shadeIntensity: {{ gradient_shade_intensity|default:0.5 }},
+        gradientToColors: {{ gradient_to_colors|default:"['#4fc6e1']"|safe }},
+        inverseColors: {{ inverse_colors|yesno:"true,false"|default:"true" }},
+        opacityFrom: {{ opacity_from|default:1 }},
+        opacityTo: {{ opacity_to|default:1 }},
+        stops: {{ gradient_stops|default:"[0, 100]"|safe }}
+      },
+    },
+    series: {{ series_data|safe }},
+    labels: {{ labels|default:"['Label']"|safe }},
+    colors: {{ colors|default:"['#6658dd']"|safe }},
+    stroke: {
+      lineCap: '{{ stroke_line_cap|default:"round" }}',
+    },
+    grid: {
+      padding: {
+        bottom: {{ grid_padding_bottom|default:40 }}
+      }
+    },
+    legend: {
+      position: "{{ legend_position|default:'bottom' }}",
+      horizontalAlign: "{{ legend_align|default:'center' }}",
+      offsetY: {{ legend_offset_y|default:0 }},
+      offsetX: {{ legend_offset_x|default:0 }}
+    },
+    responsive: [{
+      breakpoint: 600,
+      options: {
+        chart: {
+          toolbar: { show: false }
+        },
+        legend: { show: false }
+      }
+    }]
+  };
+
+  var chart = new ApexCharts(document.querySelector("#{{ chart_id|default:'apex-radialbar-chart' }}"), options);
+  chart.render();
+</script>
+#}

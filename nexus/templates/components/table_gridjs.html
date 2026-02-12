@@ -1,0 +1,27 @@
+{# Reusable GridJS table component #}
+{# Usage: {% include 'components/table_gridjs.html' with table_id="my-table" columns=grid_columns data=grid_data pagination=True search=True sort=True %} #}
+
+<div id="{{ table_id|default:'table-gridjs' }}"></div>
+
+{# Script to initialize the GridJS table - should be placed in the template where this component is used #}
+{# Example initialization script:
+<script>
+  new gridjs.Grid({
+    columns: {{ columns|safe }},
+    data: {{ data|safe }},
+    pagination: {
+      limit: {{ pagination_limit|default:10 }},
+      enabled: {{ pagination|yesno:"true,false"|default:"false" }}
+    },
+    search: {{ search|yesno:"true,false"|default:"false" }},
+    sort: {{ sort|yesno:"true,false"|default:"false" }},
+    fixedHeader: {{ fixed_header|yesno:"true,false"|default:"false" }},
+    resizable: {{ resizable|yesno:"true,false"|default:"true" }},
+    style: {
+      table: {
+        'width': '100%'
+      }
+    }
+  }).render(document.getElementById('{{ table_id|default:"table-gridjs" }}'));
+</script>
+#}

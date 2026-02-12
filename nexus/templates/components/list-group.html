@@ -1,0 +1,83 @@
+{# Reusable list-group component #}
+{# Usage: {% include 'components/list-group.html' with items=list_items type="basic" flush=False numbered=False horizontal=False classes="w-50" %} #}
+
+{% if type == "links" %}
+  <div class="list-group{% if flush %} list-group-flush{% endif %}{% if horizontal %} list-group-horizontal{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    {% for item in items %}
+      <a href="{{ item.href|default:'#' }}"
+         class="list-group-item list-group-item-action{% if item.active %} active{% endif %}{% if item.disabled %} disabled{% endif %}{% if item.color %} list-group-item-{{ item.color }}{% endif %}"
+         {% if item.disabled %}aria-disabled="true"{% endif %}
+         {% if item.current %}aria-current="true"{% endif %}>
+        {% if item.custom_content %}
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1{% if item.reset_color %} text-reset{% endif %}">{{ item.title }}</h5>
+            {% if item.badge %}
+              <small{% if item.muted %} class="text-muted"{% endif %}>{{ item.badge }}</small>
+            {% endif %}
+          </div>
+          <p class="mb-1">{{ item.content }}</p>
+          {% if item.small_text %}
+            <small{% if item.muted %} class="text-muted"{% endif %}>{{ item.small_text }}</small>
+          {% endif %}
+        {% else %}
+          {{ item.text|default:item }}
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+{% elif type == "buttons" %}
+  <div class="list-group{% if flush %} list-group-flush{% endif %}{% if horizontal %} list-group-horizontal{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    {% for item in items %}
+      <button type="button"
+              class="list-group-item list-group-item-action{% if item.active %} active{% endif %}{% if item.disabled %} disabled{% endif %}{% if item.color %} list-group-item-{{ item.color }}{% endif %}"
+              {% if item.disabled %}disabled{% endif %}
+              {% if item.current %}aria-current="true"{% endif %}>
+        {% if item.custom_content %}
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ item.title }}</h5>
+            {% if item.badge %}
+              <small{% if item.muted %} class="text-muted"{% endif %}>{{ item.badge }}</small>
+            {% endif %}
+          </div>
+          <p class="mb-1">{{ item.content }}</p>
+          {% if item.small_text %}
+            <small{% if item.muted %} class="text-muted"{% endif %}>{{ item.small_text }}</small>
+          {% endif %}
+        {% else %}
+          {{ item.text|default:item }}
+        {% endif %}
+      </button>
+    {% endfor %}
+  </div>
+{% elif type == "checkboxes" %}
+  <ul class="list-group{% if flush %} list-group-flush{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    {% for item in items %}
+      <li class="list-group-item">
+        <input class="form-check-input me-1" type="checkbox" value="{{ item.value|default:'' }}" id="{{ item.id|default:'checkbox' }}{{ forloop.counter }}">
+        <label class="form-check-label" for="{{ item.id|default:'checkbox' }}{{ forloop.counter }}">{{ item.label|default:item.text }}</label>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <ul class="list-group{% if flush %} list-group-flush{% endif %}{% if numbered %} list-group-numbered{% endif %}{% if horizontal %} list-group-horizontal{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    {% for item in items %}
+      <li class="list-group-item{% if item.active %} active{% endif %}{% if item.disabled %} disabled{% endif %}{% if item.color %} list-group-item-{{ item.color }}{% endif %}"
+          {% if item.disabled %}aria-disabled="true"{% endif %}
+          {% if item.current %}aria-current="true"{% endif %}>
+        {% if item.custom_content %}
+          <div class="d-flex w-100 justify-content-between">
+            <div class="ms-2 me-auto">
+              <div class="fw-bold">{{ item.title }}</div>
+              {{ item.content }}
+            </div>
+            {% if item.badge %}
+              <span class="badge bg-primary rounded-pill">{{ item.badge }}</span>
+            {% endif %}
+          </div>
+        {% else %}
+          {{ item.text|default:item }}
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+{% endif %}

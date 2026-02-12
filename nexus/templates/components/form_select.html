@@ -1,0 +1,48 @@
+{# Reusable form select component #}
+{# Usage: {% include 'components/form_select.html' with name="country" label="Country" options=country_options selected="US" %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label for="{{ id|default:name }}" class="form-label{% if label_class %} {{ label_class }}{% endif %}">{{ label }}{% if required %} <span class="text-danger">*</span>{% endif %}</label>
+  {% endif %}
+
+  <select
+    class="form-select{% if size %} form-select-{{ size }}{% endif %}{% if validation_state %} is-{{ validation_state }}{% endif %}{% if select_class %} {{ select_class }}{% endif %}"
+    id="{{ id|default:name }}"
+    name="{{ name }}"
+    {% if required %}required{% endif %}
+    {% if disabled %}disabled{% endif %}
+    {% if multiple %}multiple{% endif %}
+    {% if size_attr %}size="{{ size_attr }}"{% endif %}
+    {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+  >
+    {% if placeholder %}
+      <option value=""{% if not selected %} selected{% endif %}>{{ placeholder }}</option>
+    {% endif %}
+
+    {% for option in options %}
+      {% if option.group %}
+        <optgroup label="{{ option.group }}">
+          {% for sub_option in option.options %}
+            <option value="{{ sub_option.value }}"{% if sub_option.selected or sub_option.value == selected %} selected{% endif %}{% if sub_option.disabled %} disabled{% endif %}>{{ sub_option.text }}</option>
+          {% endfor %}
+        </optgroup>
+      {% else %}
+        <option value="{{ option.value }}"{% if option.selected or option.value == selected %} selected{% endif %}{% if option.disabled %} disabled{% endif %}>{{ option.text|default:option }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+
+  {% if validation_message %}
+    <div class="invalid-feedback">{{ validation_message }}</div>
+  {% endif %}
+
+  {% if valid_message %}
+    <div class="valid-feedback">{{ valid_message }}</div>
+  {% endif %}
+</div>

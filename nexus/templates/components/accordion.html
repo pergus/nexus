@@ -1,0 +1,21 @@
+{# Reusable accordion component #}
+{# Usage: {% include 'components/accordion.html' with id="accordionExample" items=accordion_items flush=True %} #}
+{# accordion_items should be a list of dictionaries with 'title', 'content', 'id', 'collapsed', and 'show' keys #}
+
+<div class="accordion{% if flush %} accordion-flush{% endif %}{% if classes %} {{ classes }}{% endif %}" id="{{ id|default:'accordionExample' }}">
+  {% for item in items %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="{{ item.id }}-heading">
+        <button class="accordion-button{% if item.collapsed %} collapsed{% endif %}" type="button" data-bs-toggle="collapse"
+          data-bs-target="#{{ item.id }}" aria-expanded="{% if item.collapsed %}false{% else %}true{% endif %}" aria-controls="{{ item.id }}">
+          {{ item.title }}
+        </button>
+      </h2>
+      <div id="{{ item.id }}" class="accordion-collapse collapse{% if item.show %} show{% endif %}" aria-labelledby="{{ item.id }}-heading"{% if not always_open %} data-bs-parent="#{{ id|default:'accordionExample' }}"{% endif %}>
+        <div class="accordion-body">
+          {{ item.content }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>

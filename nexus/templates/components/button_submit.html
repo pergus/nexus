@@ -1,0 +1,17 @@
+{# Reusable submit button component #}
+{# Usage: {% include 'components/button_submit.html' with label="Submit" btn_class="btn-primary" block=True %} #}
+
+<button
+  type="submit"
+  class="btn{% if btn_class %} {{ btn_class }}{% else %} btn-primary{% endif %}{% if size %} btn-{{ size }}{% endif %}{% if block %} w-100{% endif %}{% if outline %} btn-outline-{{ outline }}{% endif %}{% if disabled %} disabled{% endif %}{% if button_class %} {{ button_class }}{% endif %}"
+  {% if name %}name="{{ name }}"{% endif %}
+  {% if value %}value="{{ value }}"{% endif %}
+  {% if disabled %}disabled{% endif %}
+  {% if form %}form="{{ form }}"{% endif %}
+  {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+>
+  {% if icon %}
+    <i class="{{ icon }}"></i>
+  {% endif %}
+  {{ label|default:"Submit" }}
+</button>

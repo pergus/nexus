@@ -1,0 +1,88 @@
+{# Reusable bar chart component #}
+{# Usage: {% include 'components/chart_bar.html' with chart_id="my-bar-chart" series_data=series_data chart_title="My Bar Chart" height=380 %} #}
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title mb-0">{{ chart_title|default:"Bar Chart" }}</h4>
+  </div>
+  <div class="card-body">
+    <div dir="ltr">
+      <div id="{{ chart_id|default:'apex-bar-chart' }}" class="apex-charts" style="min-height: {{ height|default:380 }}px;"></div>
+    </div>
+  </div>
+</div>
+
+{# Script to initialize the chart - should be placed in the template where this component is used #}
+{# Example initialization script:
+<script>
+  var options = {
+    chart: {
+      height: {{ height|default:380 }},
+      type: 'bar',
+      toolbar: { show: false }
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        barHeight: '{{ bar_height|default:"70%" }}',
+        endingShape: '{{ ending_shape|default:"rounded" }}'
+      }
+    },
+    dataLabels: {
+      enabled: {{ data_labels|yesno:"true,false"|default:"false" }}
+    },
+    stroke: {
+      show: true,
+      width: {{ stroke_width|default:1 }},
+      colors: ['transparent']
+    },
+    series: {{ series_data|safe }},
+    xaxis: {
+      categories: {{ xaxis_categories|default:"[]"|safe }},
+      title: {
+        text: '{{ xaxis_title|default:"" }}'
+      }
+    },
+    yaxis: {
+      title: {
+        text: '{{ yaxis_title|default:"" }}'
+      }
+    },
+    fill: {
+      opacity: {{ fill_opacity|default:1 }}
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return val + " {{ tooltip_unit|default:"" }}";
+        }
+      }
+    },
+    colors: {{ colors|default:"['#6658dd', '#4fc6e1', '#4a81d4', '#00b19d', '#f1556c']"|safe }},
+    grid: {
+      borderColor: '#f1f3fa',
+      padding: {
+        bottom: 5
+      }
+    },
+    legend: {
+      position: "{{ legend_position|default:'top' }}",
+      horizontalAlign: "{{ legend_align|default:'right' }}",
+      offsetY: {{ legend_offset_y|default:-25 }},
+      offsetX: {{ legend_offset_x|default:-5 }}
+    },
+    responsive: [{
+      breakpoint: 600,
+      options: {
+        chart: {
+          toolbar: { show: false }
+        },
+        legend: { show: false }
+      }
+    }]
+  };
+
+  var chart = new ApexCharts(document.querySelector("#{{ chart_id|default:'apex-bar-chart' }}"), options);
+  chart.render();
+</script>
+#}

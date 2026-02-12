@@ -1,0 +1,26 @@
+{# Reusable alert component #}
+{# Usage: {% include 'components/alert.html' with type="primary" title="Title" message="Message" dismissible=True icon="bx bx-info-circle" %} #}
+
+<div class="alert alert-{{ type|default:'primary' }}{% if dismissible %} alert-dismissible fade show{% endif %}{% if icon %} alert-icon{% endif %}" role="alert">
+  {% if icon or title or message %}
+    {% if icon %}
+      <div class="d-flex align-items-center">
+        <div class="avatar-sm rounded bg-{{ type|default:'primary' }} d-flex justify-content-center align-items-center fs-18 me-2 flex-shrink-0">
+          <i class="{{ icon }} text-white"></i>
+        </div>
+        <div class="flex-grow-1">
+          {% if title %}<h4 class="alert-heading">{{ title }}</h4>{% endif %}
+          {% if message %}<p class="mb-0">{{ message }}</p>{% endif %}
+        </div>
+      </div>
+    {% else %}
+      {% if title %}<h4 class="alert-heading">{{ title }}</h4>{% endif %}
+      {% if message %}<p{% if title %} class="mb-0"{% endif %}>{{ message }}</p>{% endif %}
+    {% endif %}
+  {% else %}
+    {{ content|default:'' }}
+  {% endif %}
+  {% if dismissible %}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  {% endif %}
+</div>

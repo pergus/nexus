@@ -1,0 +1,20 @@
+{# Reusable tooltip component #}
+{# Usage: {% include 'components/tooltip.html' with text="Hover me" title="Tooltip Title" placement="top" custom_class="primary-tooltip" %} #}
+
+{% if element == "link" %}
+  <a href="{{ href|default:'#' }}" class="{% if link_class %}{{ link_class }}{% endif %}"
+     data-bs-toggle="tooltip"
+     {% if placement %}data-bs-placement="{{ placement }}"{% endif %}
+     {% if title %}data-bs-title="{{ title }}"{% endif %}
+     {% if custom_class %}data-bs-custom-class="{{ custom_class }}"{% endif %}>
+    {{ text|default:"Tooltip link" }}
+  </a>
+{% else %}
+  <button type="button" class="btn{% if btn_class %} {{ btn_class }}{% endif %}"
+          data-bs-toggle="tooltip"
+          {% if placement %}data-bs-placement="{{ placement }}"{% endif %}
+          {% if title %}data-bs-title="{{ title }}"{% endif %}
+          {% if custom_class %}data-bs-custom-class="{{ custom_class }}"{% endif %}>
+    {{ text|default:"Tooltip button" }}
+  </button>
+{% endif %}

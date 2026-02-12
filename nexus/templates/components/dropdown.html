@@ -1,0 +1,95 @@
+{# Reusable dropdown component #}
+{# Usage: {% include 'components/dropdown.html' with button_text="Dropdown" items=dropdown_items color="primary" split=False direction="down" dark=False %} #}
+
+{% if split %}
+  <div class="btn-group{% if direction == "up" %} dropup{% elif direction == "end" %} dropend{% elif direction == "start" %} dropstart{% endif %}">
+    <button type="button" class="btn btn-{{ color|default:'secondary' }}">{{ button_text|default:"Dropdown" }}</button>
+    <button type="button" class="btn btn-{{ color|default:'secondary' }} dropdown-toggle dropdown-toggle-split"
+            data-bs-toggle="dropdown"
+            {% if auto_close %}data-bs-auto-close="{{ auto_close }}"{% endif %}
+            {% if offset %}data-bs-offset="{{ offset }}"{% endif %}
+            {% if reference %}data-bs-reference="{{ reference }}"{% endif %}
+            aria-expanded="false">
+      <span class="visually-hidden">Toggle Dropdown</span>
+    </button>
+    {% if form %}
+      <form class="dropdown-menu{% if dark %} dropdown-menu-dark{% endif %}{% if size %} {{ size }}{% endif %}{% if classes %} {{ classes }}{% endif %}">
+        {{ form_content|safe }}
+      </form>
+    {% else %}
+      <ul class="dropdown-menu{% if dark %} dropdown-menu-dark{% endif %}{% if size %} {{ size }}{% endif %}{% if classes %} {{ classes }}{% endif %}">
+        {% for item in items %}
+          {% if item.type == "header" %}
+            <li><a class="dropdown-header">{{ item.text }}</a></li>
+          {% elif item.type == "divider" %}
+            <li><hr class="dropdown-divider"></li>
+          {% elif item.type == "text" %}
+            <li><span class="dropdown-item-text">{{ item.text }}</span></li>
+          {% else %}
+            <li>
+              <a class="dropdown-item{% if item.active %} active{% endif %}{% if item.disabled %} disabled{% endif %}"
+                 href="{{ item.href|default:'javascript:void(0);' }}"
+                 {% if item.active %}aria-current="true"{% endif %}
+                 {% if item.disabled %}aria-disabled="true"{% endif %}>
+                {{ item.text }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% else %}
+  <div class="dropdown{% if direction == "up" %} dropup{% elif direction == "end" %} dropend{% elif direction == "start" %} dropstart{% endif %}">
+    {% if link %}
+      <a href="#" class="btn btn-{{ color|default:'secondary' }} dropdown-toggle"
+         data-bs-toggle="dropdown"
+         {% if auto_close %}data-bs-auto-close="{{ auto_close }}"{% endif %}
+         {% if offset %}data-bs-offset="{{ offset }}"{% endif %}
+         {% if reference %}data-bs-reference="{{ reference }}"{% endif %}
+         aria-expanded="false">
+        {{ button_text|default:"Dropdown" }}
+      </a>
+    {% else %}
+      <button type="button" class="btn btn-{{ color|default:'secondary' }} dropdown-toggle"
+              data-bs-toggle="dropdown"
+              {% if auto_close %}data-bs-auto-close="{{ auto_close }}"{% endif %}
+              {% if offset %}data-bs-offset="{{ offset }}"{% endif %}
+              {% if reference %}data-bs-reference="{{ reference }}"{% endif %}
+              aria-expanded="false">
+        {{ button_text|default:"Dropdown" }}
+      </button>
+    {% endif %}
+
+    {% if form %}
+      <form class="dropdown-menu{% if dark %} dropdown-menu-dark{% endif %}{% if size %} {{ size }}{% endif %}{% if classes %} {{ classes }}{% endif %}">
+        {{ form_content|safe }}
+      </form>
+    {% elif text_content %}
+      <div class="dropdown-menu{% if dark %} dropdown-menu-dark{% endif %}{% if size %} {{ size }}{% endif %}{% if classes %} {{ classes }}{% endif %}">
+        {{ text_content|safe }}
+      </div>
+    {% else %}
+      <ul class="dropdown-menu{% if dark %} dropdown-menu-dark{% endif %}{% if size %} {{ size }}{% endif %}{% if classes %} {{ classes }}{% endif %}">
+        {% for item in items %}
+          {% if item.type == "header" %}
+            <li><a class="dropdown-header">{{ item.text }}</a></li>
+          {% elif item.type == "divider" %}
+            <li><hr class="dropdown-divider"></li>
+          {% elif item.type == "text" %}
+            <li><span class="dropdown-item-text">{{ item.text }}</span></li>
+          {% else %}
+            <li>
+              <a class="dropdown-item{% if item.active %} active{% endif %}{% if item.disabled %} disabled{% endif %}"
+                 href="{{ item.href|default:'javascript:void(0);' }}"
+                 {% if item.active %}aria-current="true"{% endif %}
+                 {% if item.disabled %}aria-disabled="true"{% endif %}>
+                {{ item.text }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,46 @@
+{# Reusable carousel component #}
+{# Usage: {% include 'components/carousel.html' with id="carouselExample" items=carousel_items controls=True indicators=True captions=False fade=False dark=False %} #}
+
+<div id="{{ id|default:'carousel' }}"
+     class="carousel slide{% if fade %} carousel-fade{% endif %}{% if dark %} carousel-dark{% endif %}{% if classes %} {{ classes }}{% endif %}"
+     {% if ride %}data-bs-ride="{{ ride }}"{% endif %}
+     {% if touch is not none %}data-bs-touch="{{ touch }}"{% endif %}>
+
+  {% if indicators and items|length > 1 %}
+    <div class="carousel-indicators">
+      {% for item in items %}
+        <button type="button"
+                data-bs-target="#{{ id|default:'carousel' }}"
+                data-bs-slide-to="{{ forloop.counter0 }}"
+                {% if forloop.first %}class="active" aria-current="true"{% endif %}
+                aria-label="Slide {{ forloop.counter }}"></button>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <div class="carousel-inner">
+    {% for item in items %}
+      <div class="carousel-item{% if forloop.first %} active{% endif %}"{% if item.interval %} data-bs-interval="{{ item.interval }}"{% endif %}>
+        <img src="{{ item.image }}" class="d-block w-100" alt="{{ item.alt|default:'Slide ' }}{{ forloop.counter }}">
+
+        {% if captions and item.caption %}
+          <div class="carousel-caption d-none d-md-block">
+            <h5 class="text-white">{{ item.caption.title }}</h5>
+            <p>{{ item.caption.description }}</p>
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if controls and items|length > 1 %}
+    <button class="carousel-control-prev" type="button" data-bs-target="#{{ id|default:'carousel' }}" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#{{ id|default:'carousel' }}" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  {% endif %}
+</div>

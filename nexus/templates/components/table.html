@@ -1,0 +1,42 @@
+{# Reusable table component #}
+{# Usage: {% include 'components/table.html' with headers=table_headers rows=table_rows striped=True hover=True bordered=False responsive=True caption="List of users" %} #}
+
+<div class="{% if responsive %}table-responsive{% endif %}{% if responsive_size %} table-responsive-{{ responsive_size }}{% endif %}">
+  <table class="table{% if striped %} table-striped{% endif %}{% if hover %} table-hover{% endif %}{% if bordered %} table-bordered{% endif %}{% if borderless %} table-borderless{% endif %}{% if condensed %} table-sm{% endif %}{% if dark %} table-dark{% endif %}{% if variant %} table-{{ variant }}{% endif %}{% if centered %} table-centered{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    {% if caption %}
+      <caption>{{ caption }}</caption>
+    {% endif %}
+
+    {% if headers %}
+      <thead{% if header_variant %} class="table-{{ header_variant }}"{% endif %}>
+        <tr>
+          {% for header in headers %}
+            <th scope="col"{% if header.class %} class="{{ header.class }}"{% endif %}{% if header.style %} style="{{ header.style }}"{% endif %}>{{ header.text|default:header }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+    {% endif %}
+
+    <tbody{% if body_class %} class="{{ body_class }}"{% endif %}>
+      {% for row in rows %}
+        <tr{% if row.class %} class="{{ row.class }}"{% endif %}{% if row.active %} class="table-active"{% endif %}>
+          {% for cell in row.columns %}
+            <td{% if cell.class %} class="{{ cell.class }}"{% endif %}{% if cell.colspan %} colspan="{{ cell.colspan }}"{% endif %}{% if cell.rowspan %} rowspan="{{ cell.rowspan }}"{% endif %}>{{ cell.content|default:cell }}</td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+
+    {% if footer_rows %}
+      <tfoot>
+        {% for row in footer_rows %}
+          <tr>
+            {% for cell in row.columns %}
+              <td{% if cell.class %} class="{{ cell.class }}"{% endif %}>{{ cell.content|default:cell }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tfoot>
+    {% endif %}
+  </table>
+</div>

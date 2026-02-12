@@ -1,0 +1,39 @@
+{# Reusable form switch component #}
+{# Usage: {% include 'components/form_switch.html' with name="notifications" label="Enable notifications" checked=True disabled=False %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  <div class="form-check form-switch">
+    <input
+      class="form-check-input{% if validation_state %} is-{{ validation_state }}{% endif %}{% if input_class %} {{ input_class }}{% endif %}"
+      type="checkbox"
+      role="switch"
+      id="{{ id|default:name }}"
+      name="{{ name }}"
+      {% if checked %}checked{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if required %}required{% endif %}
+      {% if value %}value="{{ value }}"{% endif %}
+      {% if form %}form="{{ form }}"{% endif %}
+      {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+      {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    >
+    {% if label %}
+      <label class="form-check-label{% if label_class %} {{ label_class }}{% endif %}" for="{{ id|default:name }}">
+        {{ label }}
+        {% if required %}<span class="text-danger">*</span>{% endif %}
+      </label>
+    {% endif %}
+  </div>
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+
+  {% if validation_message %}
+    <div class="invalid-feedback">{{ validation_message }}</div>
+  {% endif %}
+
+  {% if valid_message %}
+    <div class="valid-feedback">{{ valid_message }}</div>
+  {% endif %}
+</div>

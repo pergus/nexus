@@ -1,0 +1,14 @@
+{# Reusable popover component #}
+{# Usage: {% include 'components/popover.html' with button_text="Click me" title="Popover Title" content="Popover content" placement="top" trigger="click" %} #}
+
+<button type="button" class="btn{% if btn_class %} {{ btn_class }}{% endif %}"
+        data-bs-toggle="popover"
+        {% if placement %}data-bs-placement="{{ placement }}"{% endif %}
+        {% if title %}data-bs-title="{{ title }}"{% endif %}
+        {% if content %}data-bs-content="{{ content }}"{% endif %}
+        {% if trigger %}data-bs-trigger="{{ trigger }}"{% endif %}
+        {% if custom_class %}data-bs-custom-class="{{ custom_class }}"{% endif %}
+        {% if container %}data-bs-container="{{ container }}"{% endif %}
+        {% if disabled %}disabled{% endif %}>
+  {{ button_text|default:"Toggle popover" }}
+</button>

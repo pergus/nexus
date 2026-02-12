@@ -1,0 +1,40 @@
+{# Reusable scrollspy component #}
+{# Usage: {% include 'components/scrollspy.html' with id="scrollspyExample" navbar_id="navbarExample" items=scrollspy_items root_margin="0px 0px -40%" smooth_scroll=True %} #}
+
+<!-- Navbar for scrollspy -->
+{% if navbar %}
+  <nav id="{{ navbar_id|default:'navbar-scrollspy' }}" class="navbar bg-light px-3 mb-3">
+    <a class="navbar-brand" href="#">{{ navbar_brand|default:"Navbar" }}</a>
+    <ul class="nav nav-pills">
+      {% for item in navbar_items %}
+        {% if item.dropdown %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ item.title }}</a>
+            <ul class="dropdown-menu">
+              {% for subitem in item.items %}
+                <li><a class="dropdown-item" href="#{{ subitem.id }}">{{ subitem.title }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="#{{ item.id }}">{{ item.title }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </nav>
+{% endif %}
+
+<!-- Scrollspy content -->
+<div class="scrollspy-example{% if classes %} {{ classes }}{% endif %}"
+     data-bs-spy="scroll"
+     data-bs-target="#{{ navbar_id|default:'navbar-scrollspy' }}"
+     {% if root_margin %}data-bs-root-margin="{{ root_margin }}"{% endif %}
+     {% if smooth_scroll %}data-bs-smooth-scroll="{{ smooth_scroll }}"{% endif %}
+     tabindex="0">
+  {% for item in items %}
+    <h4 id="{{ item.id }}">{{ item.title }}</h4>
+    <p>{{ item.content }}</p>
+  {% endfor %}
+</div>

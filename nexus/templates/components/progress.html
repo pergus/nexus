@@ -1,0 +1,15 @@
+{# Reusable progress component #}
+{# Usage: {% include 'components/progress.html' with value=25 max=100 type="primary" striped=True animated=True height="sm" show_label=True %} #}
+
+<div class="progress{% if height %} progress-{{ height }}{% endif %}{% if classes %} {{ classes }}{% endif %}">
+  <div class="progress-bar{% if type %} bg-{{ type }}{% endif %}{% if striped %} progress-bar-striped{% endif %}{% if animated %} progress-bar-animated{% endif %}"
+       role="progressbar"
+       style="width: {{ value|default:0 }}%"
+       aria-valuenow="{{ value|default:0 }}"
+       aria-valuemin="0"
+       aria-valuemax="{{ max|default:100 }}">
+    {% if show_label %}
+      {{ value|default:0 }}%
+    {% endif %}
+  </div>
+</div>

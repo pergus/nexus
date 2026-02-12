@@ -1,0 +1,45 @@
+{# Reusable form input component #}
+{# Usage: {% include 'components/form_input.html' with type="text" name="username" label="Username" placeholder="Enter username" required=True %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label for="{{ id|default:name }}" class="form-label{% if label_class %} {{ label_class }}{% endif %}">{{ label }}{% if required %} <span class="text-danger">*</span>{% endif %}</label>
+  {% endif %}
+
+  <input
+    type="{{ type|default:'text' }}"
+    class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if validation_state %} is-{{ validation_state }}{% endif %}{% if input_class %} {{ input_class }}{% endif %}"
+    id="{{ id|default:name }}"
+    name="{{ name }}"
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if value %}value="{{ value }}"{% endif %}
+    {% if required %}required{% endif %}
+    {% if disabled %}disabled{% endif %}
+    {% if readonly %}readonly{% endif %}
+    {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+    {% if min %}min="{{ min }}"{% endif %}
+    {% if max %}max="{{ max }}"{% endif %}
+    {% if minlength %}minlength="{{ minlength }}"{% endif %}
+    {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
+    {% if pattern %}pattern="{{ pattern }}"{% endif %}
+    {% if step %}step="{{ step }}"{% endif %}
+    {% if autofocus %}autofocus{% endif %}
+    {% if multiple %}multiple{% endif %}
+    {% if list %}list="{{ list }}"{% endif %}
+    {% if form %}form="{{ form }}"{% endif %}
+    {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+    {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+  >
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+
+  {% if validation_message %}
+    <div class="invalid-feedback">{{ validation_message }}</div>
+  {% endif %}
+
+  {% if valid_message %}
+    <div class="valid-feedback">{{ valid_message }}</div>
+  {% endif %}
+</div>

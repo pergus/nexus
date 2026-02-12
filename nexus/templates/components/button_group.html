@@ -1,0 +1,22 @@
+{# Reusable button group component #}
+{# Usage: {% include 'components/button_group.html' with buttons=button_list vertical=True %} #}
+{# button_list should be a list of dictionaries with button properties #}
+
+<div class="btn-group{% if vertical %}-vertical{% endif %}{% if classes %} {{ classes }}{% endif %}" role="group">
+  {% for button in buttons %}
+    {% if button.dropdown %}
+      <button id="{{ button.id|default:'dropdown' }}" type="button" class="btn btn-{{ button.type|default:'light' }} dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        {{ button.text }}
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="{{ button.id|default:'dropdown' }}">
+        {% for item in button.dropdown_items %}
+          <li><a class="dropdown-item" href="{{ item.href|default:'javascript:void(0);' }}">{{ item.text }}</a></li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <button type="button" class="btn btn-{{ button.type|default:'light' }}{% if button.active %} active{% endif %}"{% if button.disabled %} disabled{% endif %}>
+        {{ button.text }}
+      </button>
+    {% endif %}
+  {% endfor %}
+</div>

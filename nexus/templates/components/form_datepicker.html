@@ -1,0 +1,50 @@
+{# Reusable date/time picker component for Flatpickr #}
+{# Usage: {% include 'components/form_datepicker.html' with name="date" label="Select Date" picker_type="date" %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label for="{{ id|default:name }}" class="form-label{% if label_class %} {{ label_class }}{% endif %}">
+      {{ label }}
+      {% if required %}<span class="text-danger">*</span>{% endif %}
+    </label>
+  {% endif %}
+
+  <input
+    type="text"
+    class="form-control{% if input_class %} {{ input_class }}{% endif %}"
+    id="{{ id|default:name }}"
+    name="{{ name }}"
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if value %}value="{{ value }}"{% endif %}
+    {% if required %}required{% endif %}
+    {% if disabled %}disabled{% endif %}
+    {% if readonly %}readonly{% endif %}
+    {% if form %}form="{{ form }}"{% endif %}
+    {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+    {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    {% if picker_config %}data-config="{{ picker_config|safe }}"{% endif %}
+  >
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+</div>
+
+{# Configuration examples that should be placed in the template where this component is used #}
+{# Example initialization scripts:
+<script>
+  // Basic date picker
+  flatpickr("#{{ id|default:name }}", {
+    {% if enable_time %}enableTime: {{ enable_time|yesno:"true,false" }},{% endif %}
+    {% if no_calendar %}noCalendar: {{ no_calendar|yesno:"true,false" }},{% endif %}
+    {% if date_format %}dateFormat: "{{ date_format }}",{% endif %}
+    {% if min_date %}minDate: "{{ min_date }}",{% endif %}
+    {% if max_date %}maxDate: "{{ max_date }}",{% endif %}
+    {% if disable_dates %}disable: {{ disable_dates|safe }},{% endif %}
+    {% if mode %}mode: "{{ mode }}",{% endif %}
+    {% if conjunction %}conjunction: "{{ conjunction }}",{% endif %}
+    {% if inline %}inline: {{ inline|yesno:"true,false" }},{% endif %}
+    {% if default_date %}defaultDate: "{{ default_date }}",{% endif %}
+  });
+</script>
+#}

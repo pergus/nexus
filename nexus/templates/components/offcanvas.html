@@ -1,0 +1,50 @@
+{# Reusable offcanvas component #}
+{# Usage: {% include 'components/offcanvas.html' with id="offcanvasExample" title="Offcanvas Title" body="Content" position="start" scroll=True backdrop=False %} #}
+
+<!-- Trigger button -->
+{% if trigger_type == "link" %}
+  <a class="btn{% if trigger_btn_class %} {{ trigger_btn_class }}{% endif %}"
+     data-bs-toggle="offcanvas"
+     href="#{{ id|default:'offcanvas' }}"
+     role="button"
+     aria-controls="{{ id|default:'offcanvas' }}">
+    {{ trigger_text|default:"Toggle offcanvas" }}
+  </a>
+{% else %}
+  <button class="btn{% if trigger_btn_class %} {{ trigger_btn_class }}{% endif %}"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#{{ id|default:'offcanvas' }}"
+          aria-controls="{{ id|default:'offcanvas' }}">
+    {{ trigger_text|default:"Toggle offcanvas" }}
+  </button>
+{% endif %}
+
+<!-- Offcanvas -->
+<div class="offcanvas offcanvas-{{ position|default:'start' }}{% if classes %} {{ classes }}{% endif %}"
+     tabindex="-1"
+     id="{{ id|default:'offcanvas' }}"
+     aria-labelledby="{{ id|default:'offcanvas' }}Label"
+     {% if scroll %}data-bs-scroll="{{ scroll }}"{% endif %}
+     {% if backdrop is not None %}data-bs-backdrop="{{ backdrop }}"{% endif %}>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title mt-0" id="{{ id|default:'offcanvas' }}Label">{{ title|default:"Offcanvas" }}</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    {{ body|default:"Offcanvas content" }}
+
+    {% if show_dropdown %}
+      <div class="dropdown mt-3">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="{{ id|default:'offcanvas' }}DropdownMenuButton" data-bs-toggle="dropdown">
+          {{ dropdown_text|default:"Dropdown button" }}
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="{{ id|default:'offcanvas' }}DropdownMenuButton">
+          {% for item in dropdown_items %}
+            <li><a class="dropdown-item" href="{{ item.href|default:'javascript:void(0);' }}">{{ item.text }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</div>

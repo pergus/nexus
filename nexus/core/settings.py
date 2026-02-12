@@ -14,7 +14,7 @@ SECRET_KEY = "django-insecure-da%g5m&dlcz-v(4_7w!lvb2_k!odi%##uzyg7hn288k_y!t6ig
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "10.0.1.230"]
+ALLOWED_HOSTS = ["127.0.0.1", "se-perguslab01x.se.axis.com"]
 
 
 # Application definition
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "components_app",
 ]
 
 if DEBUG:
@@ -53,7 +54,7 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"], 
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -117,7 +118,10 @@ STATIC_URL = "static/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    BASE_DIR / "nexus_static"
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

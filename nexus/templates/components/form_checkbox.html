@@ -1,0 +1,37 @@
+{# Reusable form checkbox component #}
+{# Usage: {% include 'components/form_checkbox.html' with name="agree" label="I agree to the terms" checked=True inline=False %} #}
+
+<div class="form-check{% if inline %} form-check-inline{% endif %}{% if switch %} form-switch{% endif %}{% if color %} form-checkbox-{{ color }}{% endif %}{% if validation_state %} is-{{ validation_state }}{% endif %}{% if group_class %} {{ group_class }}{% endif %}">
+  <input
+    class="form-check-input{% if input_class %} {{ input_class }}{% endif %}"
+    type="{% if switch %}checkbox{% else %}{{ type|default:'checkbox' }}{% endif %}"
+    id="{{ id|default:name }}"
+    name="{{ name }}"
+    {% if value %}value="{{ value }}"{% endif %}
+    {% if checked %}checked{% endif %}
+    {% if required %}required{% endif %}
+    {% if disabled %}disabled{% endif %}
+    {% if readonly %}readonly{% endif %}
+    {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+    {% if switch and switch_checked %}role="switch"{% endif %}
+  >
+  {% if label %}
+    <label class="form-check-label{% if label_class %} {{ label_class }}{% endif %}" for="{{ id|default:name }}">
+      {{ label }}
+      {% if required %}<span class="text-danger">*</span>{% endif %}
+    </label>
+  {% endif %}
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+
+  {% if validation_message %}
+    <div class="invalid-feedback">{{ validation_message }}</div>
+  {% endif %}
+
+  {% if valid_message %}
+    <div class="valid-feedback">{{ valid_message }}</div>
+  {% endif %}
+</div>

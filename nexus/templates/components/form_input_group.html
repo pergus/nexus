@@ -1,0 +1,61 @@
+{# Reusable input group component for complex form layouts #}
+{# Usage: {% include 'components/form_input_group.html' with name="username" label="Username" prepend_text="@" %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label for="{{ id|default:name }}" class="form-label{% if label_class %} {{ label_class }}{% endif %}">
+      {{ label }}
+      {% if required %}<span class="text-danger">*</span>{% endif %}
+    </label>
+  {% endif %}
+
+  <div class="input-group{% if validation_state %} has-validation{% endif %}{% if size %} input-group-{{ size }}{% endif %}">
+    {% if prepend_text %}
+      <span class="input-group-text">{{ prepend_text }}</span>
+    {% endif %}
+
+    {% if prepend_button %}
+      <button class="btn {{ prepend_button_class|default:'btn-outline-secondary' }}" type="button">{{ prepend_button_text }}</button>
+    {% endif %}
+
+    <input
+      type="{{ type|default:'text' }}"
+      class="form-control{% if validation_state %} is-{{ validation_state }}{% endif %}{% if input_class %} {{ input_class }}{% endif %}"
+      id="{{ id|default:name }}"
+      name="{{ name }}"
+      {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+      {% if value %}value="{{ value }}"{% endif %}
+      {% if required %}required{% endif %}
+      {% if disabled %}disabled{% endif %}
+      {% if readonly %}readonly{% endif %}
+      {% if autocomplete %}autocomplete="{{ autocomplete }}"{% endif %}
+      {% if min %}min="{{ min }}"{% endif %}
+      {% if max %}max="{{ max }}"{% endif %}
+      {% if minlength %}minlength="{{ minlength }}"{% endif %}
+      {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
+      {% if pattern %}pattern="{{ pattern }}"{% endif %}
+      {% if autofocus %}autofocus{% endif %}
+      {% if form %}form="{{ form }}"{% endif %}
+      {% if aria_describedby %}aria-describedby="{{ id|default:name }}-feedback"{% endif %}
+      {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    >
+
+    {% if append_text %}
+      <span class="input-group-text">{{ append_text }}</span>
+    {% endif %}
+
+    {% if append_button %}
+      <button class="btn {{ append_button_class|default:'btn-outline-secondary' }}" type="button">{{ append_button_text }}</button>
+    {% endif %}
+
+    {% if validation_state %}
+      <div class="{% if validation_state == "valid" %}valid-feedback{% else %}invalid-feedback{% endif %}" id="{{ id|default:name }}-feedback">
+        {{ validation_message|default:"Please enter a valid value." }}
+      </div>
+    {% endif %}
+  </div>
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+</div>

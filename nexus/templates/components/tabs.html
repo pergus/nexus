@@ -1,0 +1,58 @@
+{# Reusable tabs component #}
+{# Usage: {% include 'components/tabs.html' with tabs=tab_items active_tab="profile" type="tabs" justified=False vertical=False %} #}
+{# tab_items should be a list of dictionaries with 'id', 'title', 'content', and 'icon' keys #}
+
+<div class="row">
+  {% if vertical and vertical_position == "right" %}
+    <div class="col-sm-9 mb-2 mb-sm-0">
+      <div class="tab-content pt-0" id="{{ id|default:'tabs' }}-content">
+        {% for tab in tabs %}
+          <div class="tab-pane fade{% if tab.id == active_tab %} active show{% endif %}" id="{{ tab.id }}" role="tabpanel" aria-labelledby="{{ tab.id }}-tab">
+            {{ tab.content }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="{% if vertical %}col-sm-3{% else %}col-12{% endif %}{% if vertical and vertical_position == "right" %} order-last{% endif %}">
+    <div class="nav{% if type == "pills" %} nav-pills{% else %} nav-tabs{% endif %}{% if justified %} nav-justified{% endif %}{% if vertical %} flex-column{% endif %}" id="{{ id|default:'tabs' }}-tab" role="tablist">
+      {% for tab in tabs %}
+        <a class="nav-link{% if tab.id == active_tab %} active{% endif %}"
+           id="{{ tab.id }}-tab"
+           data-bs-toggle="tab"
+           href="#{{ tab.id }}"
+           role="tab"
+           aria-controls="{{ tab.id }}"
+           aria-selected="{% if tab.id == active_tab %}true{% else %}false{% endif %}">
+          {% if tab.icon %}
+            <span class="d-block d-sm-none"><i class="{{ tab.icon }}"></i></span>
+          {% endif %}
+          <span class="{% if tab.icon %}d-none d-sm-block{% endif %}">{{ tab.title }}</span>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% if vertical and vertical_position != "right" %}
+    <div class="col-sm-9">
+      <div class="tab-content pt-0" id="{{ id|default:'tabs' }}-content">
+        {% for tab in tabs %}
+          <div class="tab-pane fade{% if tab.id == active_tab %} active show{% endif %}" id="{{ tab.id }}" role="tabpanel" aria-labelledby="{{ tab.id }}-tab">
+            {{ tab.content }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% elif not vertical %}
+    <div class="col-12">
+      <div class="tab-content pt-3" id="{{ id|default:'tabs' }}-content">
+        {% for tab in tabs %}
+          <div class="tab-pane fade{% if tab.id == active_tab %} active show{% endif %}" id="{{ tab.id }}" role="tabpanel" aria-labelledby="{{ tab.id }}-tab">
+            {{ tab.content }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</div>

@@ -1,0 +1,49 @@
+{# Reusable rich text editor component for Quill.js #}
+{# Usage: {% include 'components/form_editor.html' with name="content" label="Content" editor_type="snow" height=300 %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label class="form-label{% if label_class %} {{ label_class }}{% endif %}">
+      {{ label }}
+      {% if required %}<span class="text-danger">*</span>{% endif %}
+    </label>
+  {% endif %}
+
+  <div
+    id="{{ id|default:name }}"
+    style="height: {{ height|default:300 }}px;"
+    class="{% if editor_type == "bubble" %}ql-bubble{% else %}ql-snow{% endif %}{% if editor_class %} {{ editor_class }}{% endif %}"
+  >
+    {% if value %}{{ value|safe }}{% endif %}
+  </div>
+
+  <textarea
+    name="{{ name }}"
+    id="{{ id|default:name }}-textarea"
+    class="d-none"
+    {% if required %}required{% endif %}
+    {% if form %}form="{{ form }}"{% endif %}
+  >{{ value|safe }}</textarea>
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+</div>
+
+{# Script to initialize the editor - should be placed in the template where this component is used #}
+{# Example initialization script:
+<script>
+  var quill = new Quill('#{{ id|default:name }}', {
+    modules: {
+      toolbar: {% if editor_type == "bubble" %}false{% else %}'#{{ id|default:name }}-toolbar'{% endif %}
+    },
+    theme: '{{ editor_type|default:"snow" }}',
+    placeholder: '{{ placeholder|default:"Compose an epic..." }}'
+  });
+
+  // Sync editor content with hidden textarea for form submission
+  quill.on('text-change', function() {
+    document.getElementById('{{ id|default:name }}-textarea').value = quill.root.innerHTML;
+  });
+</script>
+#}

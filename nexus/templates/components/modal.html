@@ -1,0 +1,38 @@
+{# Reusable modal component #}
+{# Usage: {% include 'components/modal.html' with id="myModal" title="Modal Title" body="Modal content" size="lg" centered=True %} #}
+
+<!-- Button to trigger modal -->
+{% if trigger_button_text %}
+  <button type="button" class="btn{% if trigger_btn_class %} {{ trigger_btn_class }}{% endif %}" data-bs-toggle="modal" data-bs-target="#{{ id|default:'exampleModal' }}">
+    {{ trigger_button_text }}
+  </button>
+{% endif %}
+
+<!-- Modal -->
+<div class="modal fade{% if modal_class %} {{ modal_class }}{% endif %}"
+     id="{{ id|default:'exampleModal' }}"
+     tabindex="-1"
+     aria-labelledby="{{ id|default:'exampleModal' }}Label"
+     aria-hidden="true"
+     {% if static_backdrop %}data-bs-backdrop="static"{% endif %}
+     {% if keyboard %}data-bs-keyboard="false"{% endif %}>
+  <div class="modal-dialog{% if size %} modal-{{ size }}{% endif %}{% if centered %} modal-dialog-centered{% endif %}{% if scrollable %} modal-dialog-scrollable{% endif %}{% if fullscreen %} modal-fullscreen{% elif fullscreen_sm %} modal-fullscreen-sm-down{% elif fullscreen_md %} modal-fullscreen-md-down{% elif fullscreen_lg %} modal-fullscreen-lg-down{% elif fullscreen_xl %} modal-fullscreen-xl-down{% elif fullscreen_xxl %} modal-fullscreen-xxl-down{% endif %}">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="{{ id|default:'exampleModal' }}Label">{{ title|default:"Modal Title" }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        {{ body|default:"Modal content" }}
+      </div>
+      <div class="modal-footer">
+        {% if footer_content %}
+          {{ footer_content }}
+        {% else %}
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+{# Reusable form textarea component #}
+{# Usage: {% include 'components/form_textarea.html' with name="message" label="Message" rows=5 placeholder="Enter your message" required=True %} #}
+
+<div class="mb-3{% if group_class %} {{ group_class }}{% endif %}">
+  {% if label %}
+    <label for="{{ id|default:name }}" class="form-label{% if label_class %} {{ label_class }}{% endif %}">{{ label }}{% if required %} <span class="text-danger">*</span>{% endif %}</label>
+  {% endif %}
+
+  <textarea
+    class="form-control{% if size %} form-control-{{ size }}{% endif %}{% if validation_state %} is-{{ validation_state }}{% endif %}{% if textarea_class %} {{ textarea_class }}{% endif %}"
+    id="{{ id|default:name }}"
+    name="{{ name }}"
+    {% if placeholder %}placeholder="{{ placeholder }}"{% endif %}
+    {% if rows %}rows="{{ rows }}"{% endif %}
+    {% if cols %}cols="{{ cols }}"{% endif %}
+    {% if required %}required{% endif %}
+    {% if disabled %}disabled{% endif %}
+    {% if readonly %}readonly{% endif %}
+    {% if minlength %}minlength="{{ minlength }}"{% endif %}
+    {% if maxlength %}maxlength="{{ maxlength }}"{% endif %}
+    {% if aria_label %}aria-label="{{ aria_label }}"{% endif %}
+    {% if aria_describedby %}aria-describedby="{{ aria_describedby }}"{% endif %}
+  >{{ value|default:"" }}</textarea>
+
+  {% if help_text %}
+    <div class="form-text">{{ help_text }}</div>
+  {% endif %}
+
+  {% if validation_message %}
+    <div class="invalid-feedback">{{ validation_message }}</div>
+  {% endif %}
+
+  {% if valid_message %}
+    <div class="valid-feedback">{{ valid_message }}</div>
+  {% endif %}
+</div>

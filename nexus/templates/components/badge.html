@@ -1,0 +1,6 @@
+{# Reusable badge component #}
+{# Usage: {% include 'components/badge.html' with type="primary" text="New" pill=True %} #}
+
+<span class="badge{% if type %} bg-{{ type }}{% endif %}{% if outline %} badge-outline-{{ type }}{% endif %}{% if soft %} badge-soft-{{ type }}{% endif %}{% if pill %} rounded-pill{% endif %}{% if classes %} {{ classes }}{% endif %}">
+  {{ text }}
+</span>

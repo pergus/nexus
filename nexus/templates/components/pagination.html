@@ -1,0 +1,29 @@
+{# Reusable pagination component #}
+{# Usage: {% include 'components/pagination.html' with items=page_items current_page=1 alignment="center" size="lg" rounded=True %} #}
+{# page_items should be a list of dictionaries with 'number', 'url', and 'active' keys #}
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination{% if alignment == "center" %} justify-content-center{% elif alignment == "end" %} justify-content-end{% endif %}{% if size %} pagination-{{ size }}{% endif %}{% if rounded %} pagination-rounded{% endif %}{% if classes %} {{ classes }}{% endif %}">
+    {% if show_previous %}
+      <li class="page-item{% if not has_previous %} disabled{% endif %}">
+        <a class="page-link" href="{% if has_previous %}{{ previous_url }}{% else %}javascript:void(0);{% endif %}" aria-label="Previous">
+          <span aria-hidden="true">{{ previous_text|default:"&laquo;" }}</span>
+        </a>
+      </li>
+    {% endif %}
+
+    {% for item in items %}
+      <li class="page-item{% if item.active %} active{% endif %}{% if item.disabled %} disabled{% endif %}">
+        <a class="page-link" href="{{ item.url|default:'javascript:void(0);' }}">{{ item.number }}</a>
+      </li>
+    {% endfor %}
+
+    {% if show_next %}
+      <li class="page-item{% if not has_next %} disabled{% endif %}">
+        <a class="page-link" href="{% if has_next %}{{ next_url }}{% else %}javascript:void(0);{% endif %}" aria-label="Next">
+          <span aria-hidden="true">{{ next_text|default:"&raquo;" }}</span>
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>

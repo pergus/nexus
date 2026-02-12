@@ -1,0 +1,41 @@
+{# Reusable toast component #}
+{# Usage: {% include 'components/toast.html' with id="myToast" title="Notification" message="This is a toast message" time="11 mins ago" show_close=True show_logo=True type="primary" placement="bottom-0 end-0" %} #}
+
+<div class="toast{% if show %} show{% endif %}{% if classes %} {{ classes }}{% endif %}"
+     id="{{ id|default:'toast' }}"
+     role="alert"
+     aria-live="assertive"
+     aria-atomic="true"
+     {% if autohide %}data-bs-autohide="true"{% endif %}
+     {% if delay %}data-bs-delay="{{ delay }}"{% endif %}>
+  <div class="toast-header{% if type %} text-bg-{{ type }}{% endif %}">
+    {% if show_logo %}
+      <div class="auth-logo me-auto">
+        <img class="logo-dark" src="{{ logo_dark|default:'/images/logo-dark.png' }}" alt="logo-dark" height="18" />
+        <img class="logo-light" src="{{ logo_light|default:'/images/logo-light.png' }}" alt="logo-light" height="18" />
+      </div>
+    {% endif %}
+    {% if title %}
+      <strong class="me-auto">{{ title }}</strong>
+    {% endif %}
+    {% if time %}
+      <small{% if type %} class="text-muted"{% endif %}>{{ time }}</small>
+    {% endif %}
+    {% if show_close %}
+      <button type="button" class="btn-close{% if type %} btn-close-white{% endif %}" data-bs-dismiss="toast" aria-label="Close"></button>
+    {% endif %}
+  </div>
+  <div class="toast-body">
+    {{ message|default:"Toast message" }}
+    {% if show_actions %}
+      <div class="mt-2 pt-2 border-top">
+        {% if action_primary %}
+          <button type="button" class="btn btn-{% if type and type != 'primary' %}light{% else %}primary{% endif %} btn-sm me-1">{{ action_primary }}</button>
+        {% endif %}
+        {% if action_secondary %}
+          <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">{{ action_secondary }}</button>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
