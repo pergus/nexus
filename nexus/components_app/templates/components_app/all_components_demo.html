@@ -114,10 +114,16 @@
             </div>
             <div class="card-body">
                 <div class="d-flex gap-3">
-                    {% include 'components/avatar.html' with src="/images/users/avatar-2.jpg" alt="User" size="xs" rounded=True %}
-                    {% include 'components/avatar.html' with src="/images/users/avatar-3.jpg" alt="User" size="sm" rounded=True %}
-                    {% include 'components/avatar.html' with src="/images/users/avatar-4.jpg" alt="User" size="md" rounded=True %}
-                    {% include 'components/avatar.html' with src="/images/users/avatar-5.jpg" alt="User" size="lg" rounded=True circle=True %}
+                    
+                    {% static 'images/users/avatar-2.jpg' as avatar_2 %}
+                    {% static 'images/users/avatar-3.jpg' as avatar_3 %}
+                    {% static 'images/users/avatar-4.jpg' as avatar_4 %}
+                    {% static 'images/users/avatar-5.jpg' as avatar_5 %}
+
+                    {% include 'components/avatar.html' with src=avatar_2 alt="User" size="xs" rounded=True %}
+                    {% include 'components/avatar.html' with src=avatar_3 alt="User" size="sm" rounded=True %}
+                    {% include 'components/avatar.html' with src=avatar_4 alt="User" size="md" rounded=True %}
+                    {% include 'components/avatar.html' with src=avatar_5 alt="User" size="lg" rounded=True circle=True %}
                 </div>
             </div>
         </div>
@@ -131,9 +137,7 @@
             </div>
             <div class="card-body">
                 {% include 'components/progress.html' with value=25 max=100 type="primary" %}
-
                 {% include 'components/progress.html' with value=50 max=100 type="success" striped=True classes="mt-2" %}
-
                 {% include 'components/progress.html' with value=75 max=100 type="warning" animated=True show_label=True classes="mt-2" %}
             </div>
         </div>

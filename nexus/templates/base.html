@@ -5,13 +5,8 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <title>{% block title %}{% endblock title %} | Darkone - Dark Admin & UI Kit Template</title>
+  <title>{% block title %}{% endblock title %} | Nexus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-    content="Darkone: An advanced, fully responsive admin dashboard template packed with features to streamline your analytics and management needs." />
-  <meta name="author" content="StackBros" />
-  <meta name="keywords"
-    content="Darkone, admin dashboard, responsive template, analytics, modern UI, management tools" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#ffffff">
@@ -19,13 +14,16 @@
   <!-- App favicon -->
   <link rel="shortcut icon" href="{% static '/images/favicon.ico' %}">
 
+  <!-- Iconify -->
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
   {% block css %}
   <!-- Your stuff: Third-party CSS libraries go here -->
   <!-- This file stores project-specific CSS -->
 
   {% block extra_css %}{% endblock extra_css %}
 
-<!-- Google Font Family link -->
+  <!-- Google Font Family link -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">

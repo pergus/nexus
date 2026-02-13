@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(./enhance_partials_simple.sh:*)",
+      "Bash(./fix_partials_formatting.sh:*)",
+      "Bash(./cleanup_partials.sh:*)",
+      "Bash(./fix_markdown_simple.sh:*)",
+      "Bash(./fix_lists_and_tables.sh:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

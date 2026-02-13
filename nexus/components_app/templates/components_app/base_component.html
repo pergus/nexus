@@ -1,0 +1,33 @@
+{% extends "vertical.html" %}
+{% load static i18n %}
+
+{% block title %}{{ page_title|default:"Component Demo" }}{% endblock title %}
+
+{% block page_title %}
+{% include "partials/page-title.html" with title=page_title subtitle="Component Demo" %}
+{% endblock page_title %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">{{ page_title|default:"Component" }} Demo</h5>
+            </div>
+            <div class="card-body">
+                <p>This is a demo page for {{ page_title|default:"the component" }}.</p>
+
+                {% if page_title %}
+                <h5>{{ page_title }} Component</h5>
+                {% endif %}
+
+                <p>Content for this component would be displayed here.</p>
+
+                <div class="mt-3">
+                    <a href="{% url 'components_app:all-components-demo' %}" class="btn btn-primary">Back to All Components</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

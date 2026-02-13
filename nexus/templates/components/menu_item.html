@@ -1,0 +1,35 @@
+<li class="nav-item {% if is_active %}active{% endif %} {% if css_class %}{{ css_class }}{% endif %}">
+    {% if children %}
+        <a class="nav-link menu-arrow" href="#{{ item_id|slugify }}" data-bs-toggle="collapse" role="button"
+           aria-expanded="{% if is_expanded %}true{% else %}false{% endif %}" aria-controls="{{ item_id|slugify }}">
+            {% if icon %}
+            <span class="nav-icon">
+                <iconify-icon icon="{{ icon }}"></iconify-icon>
+            </span>
+            {% endif %}
+            <span class="nav-text"> {{ title }} </span>
+            {% if badge_text %}
+            <span class="badge bg-{{ badge_color|default:'primary' }} ms-auto">{{ badge_text }}</span>
+            {% endif %}
+        </a>
+        <div class="collapse {% if is_expanded %}show{% endif %}" id="{{ item_id|slugify }}">
+            <ul class="nav sub-navbar-nav">
+                {% for child in children %}
+                    {% include 'components/menu_subitem.html' with item=child %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% else %}
+        <a class="nav-link {% if is_active %}active{% endif %}" href="{{ url }}">
+            {% if icon %}
+            <span class="nav-icon">
+                <iconify-icon icon="{{ icon }}"></iconify-icon>
+            </span>
+            {% endif %}
+            <span class="nav-text"> {{ title }} </span>
+            {% if badge_text %}
+            <span class="badge bg-{{ badge_color|default:'primary' }} ms-auto">{{ badge_text }}</span>
+            {% endif %}
+        </a>
+    {% endif %}
+</li>

@@ -1,0 +1,42 @@
+{% extends "components_app/base_component.html" %}
+
+{% block page_content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">{{ page_title }} Demo</h5>
+            </div>
+            <div class="card-body">
+                <p>This is a demo page for {{ page_title }} component.</p>
+
+                {% if page_title == "Google Maps" %}
+                    <p>Google Maps integration would be displayed here.</p>
+                    <div class="bg-light p-3 rounded">
+                        <p><strong>Implementation Notes:</strong></p>
+                        <ul>
+                            <li>Include Google Maps API script</li>
+                            <li>Use gmaps library for enhanced functionality</li>
+                            <li>Add map container with appropriate ID</li>
+                        </ul>
+                    </div>
+                {% elif page_title == "Vector Maps" %}
+                    <p>Vector Maps integration would be displayed here.</p>
+                    <div class="bg-light p-3 rounded">
+                        <p><strong>Implementation Notes:</strong></p>
+                        <ul>
+                            <li>Include jsvectormap library</li>
+                            <li>Load appropriate map data files</li>
+                            <li>Initialize map with configuration options</li>
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <div class="mt-3">
+                    <a href="{% url 'components_app:all-components-demo' %}" class="btn btn-primary">Back to All Components</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock page_content %}

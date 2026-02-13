@@ -1,0 +1,7 @@
+<li class="sub-nav-item {% if item.is_active %}active{% endif %} {% if item.css_class %}{{ item.css_class }}{% endif %}">
+    <a class="sub-nav-link" href="{{ item.url }}">{{ item.title }}
+        {% if item.badge_text %}
+        <span class="badge bg-{{ item.badge_color|default:'primary' }} ms-auto">{{ item.badge_text }}</span>
+        {% endif %}
+    </a>
+</li>

@@ -2,10 +2,83 @@ site_name: Nexus
 site_url: https://pergus.github.io/nexus
 repo_url: https://github.com/pergus/nexus
 repo_name: pergus/nexus
-#strict: true
+docs_dir: docs
 nav:
   - Home: index.md
   - Changelog: changelog.md
+  - Components:
+    - accordion: component_accordion.md
+    - alert: component_alert.md
+    - avatar: component_avatar.md
+    - badge: component_badge.md
+    - breadcrumb: component_breadcrumb.md
+    - button: component_button.md
+    - button_group: component_button_group.md
+    - button_link: component_button_link.md
+    - button_submit: component_button_submit.md
+    - card: component_card.md
+    - carousel: component_carousel.md
+    - chart_bar: component_chart_bar.md
+    - chart_candlestick: component_chart_candlestick.md
+    - chart_column: component_chart_column.md
+    - chart_line: component_chart_line.md
+    - chart_mixed: component_chart_mixed.md
+    - chart_pie: component_chart_pie.md
+    - chart_radialbar: component_chart_radialbar.md
+    - chart_scatter: component_chart_scatter.md
+    - collapse: component_collapse.md
+    - dropdown: component_dropdown.md
+    - form_checkbox: component_form_checkbox.md
+    - form_datepicker: component_form_datepicker.md
+    - form_datetime: component_form_datetime.md
+    - form_dropzone: component_form_dropzone.md
+    - form_editor: component_form_editor.md
+    - form_file: component_form_file.md
+    - form_group: component_form_group.md
+    - form_input: component_form_input.md
+    - form_input_group: component_form_input_group.md
+    - form_radio: component_form_radio.md
+    - form_range: component_form_range.md
+    - form_select: component_form_select.md
+    - form_switch: component_form_switch.md
+    - form_textarea: component_form_textarea.md
+    - form_validation: component_form_validation.md
+    - list-group: component_list-group.md
+    - map_container: component_map_container.md
+    - map_google_basic: component_map_google_basic.md
+    - map_google_markers: component_map_google_markers.md
+    - map_google_streetview: component_map_google_streetview.md
+    - map_google_themed: component_map_google_themed.md
+    - map_vector: component_map_vector.md
+    - menu_item: component_menu_item.md
+    - menu_section: component_menu_section.md
+    - menu_subitem: component_menu_subitem.md
+    - modal: component_modal.md
+    - offcanvas: component_offcanvas.md
+    - pagination: component_pagination.md
+    - placeholder: component_placeholder.md
+    - popover: component_popover.md
+    - progress: component_progress.md
+    - scrollspy: component_scrollspy.md
+    - sidebar_menu: component_sidebar_menu.md
+    - spinner: component_spinner.md
+    - table: component_table.md
+    - table_gridjs: component_table_gridjs.md
+    - tabs: component_tabs.md
+    - toast: component_toast.md
+    - tooltip: component_tooltip.md
+  - Partials:
+    - flexible_sidebar: partial_flexible_sidebar.md
+    - footer: partial_footer.md
+    - head-css: partial_head-css.md
+    - menu: partial_menu.md
+    - menu_improved: partial_menu_improved.md
+    - page-title: partial_page-title.md
+    - sidebar: partial_sidebar.md
+    - sidebar_refactored: partial_sidebar_refactored.md
+    - title-meta: partial_title-meta.md
+    - topbar: partial_topbar.md
+    - vendor-scripts: partial_vendor-scripts.md
 theme:
   name: material
   language: en
@@ -52,7 +125,6 @@ markdown_extensions:
         !!python/object/apply:pymdownx.slugs.slugify { kwds: { case: lower } }
   - meta
 plugins:
-  - include-markdown
   - search:
       lang: en
   - mkdocstrings

@@ -1,0 +1,94 @@
+{% load static i18n %}
+
+<div class="app-sidebar">
+    <!-- Sidebar Logo -->
+    <div class="logo-box">
+        <a href="{% if logo_url %}{{ logo_url }}{% else %}/{% endif %}" class="logo-dark">
+            <img src="{% static logo_sm_dark|default:'/images/logo-sm.png' %}" class="logo-sm" alt="logo sm">
+            <img src="{% static logo_lg_dark|default:'/images/logo-dark.png' %}" class="logo-lg" alt="logo dark">
+        </a>
+
+        <a href="{% if logo_url %}{{ logo_url }}{% else %}/{% endif %}" class="logo-light">
+            <img src="{% static logo_sm_light|default:'/images/logo-sm.png' %}" class="logo-sm" alt="logo sm">
+            <img src="{% static logo_lg_light|default:'/images/logo-light.png' %}" class="logo-lg" alt="logo light">
+        </a>
+    </div>
+
+    <div class="scrollbar" data-simplebar>
+        <ul class="navbar-nav" id="navbar-nav">
+            {% if menu_items %}
+                <!-- Custom menu items -->
+                {% for section in menu_items %}
+                    {% if section.title %}
+                    <li class="menu-title">{{ section.title }}</li>
+                    {% endif %}
+                    {% for item in section.items %}
+                        <li class="nav-item {% if item.is_active %}active{% endif %}">
+                            {% if item.children %}
+                                <a class="nav-link menu-arrow" href="#{{ item.id|slugify }}" data-bs-toggle="collapse" role="button"
+                                   aria-expanded="{% if item.is_expanded %}true{% else %}false{% endif %}" aria-controls="{{ item.id|slugify }}">
+                                    {% if item.icon %}
+                                    <span class="nav-icon">
+                                        <iconify-icon icon="{{ item.icon }}"></iconify-icon>
+                                    </span>
+                                    {% endif %}
+                                    <span class="nav-text"> {{ item.title }} </span>
+                                    {% if item.badge %}
+                                    <span class="badge bg-{{ item.badge.color|default:'primary' }} ms-auto">{{ item.badge.text }}</span>
+                                    {% endif %}
+                                </a>
+                                <div class="collapse {% if item.is_expanded %}show{% endif %}" id="{{ item.id|slugify }}">
+                                    <ul class="nav sub-navbar-nav">
+                                        {% for child in item.children %}
+                                            <li class="sub-nav-item {% if child.is_active %}active{% endif %}">
+                                                <a class="sub-nav-link" href="{{ child.url }}">{{ child.title }}
+                                                    {% if child.badge %}
+                                                    <span class="badge bg-{{ child.badge.color|default:'primary' }} ms-auto">{{ child.badge.text }}</span>
+                                                    {% endif %}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <a class="nav-link {% if item.is_active %}active{% endif %}" href="{{ item.url }}">
+                                    {% if item.icon %}
+                                    <span class="nav-icon">
+                                        <iconify-icon icon="{{ item.icon }}"></iconify-icon>
+                                    </span>
+                                    {% endif %}
+                                    <span class="nav-text"> {{ item.title }} </span>
+                                    {% if item.badge %}
+                                    <span class="badge bg-{{ item.badge.color|default:'primary' }} ms-auto">{{ item.badge.text }}</span>
+                                    {% endif %}
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+                <!-- Default menu fallback -->
+                {% block default_menu %}
+                <li class="menu-title">Menu</li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">
+                        <span class="nav-icon">
+                            <iconify-icon icon="mingcute:home-3-line"></iconify-icon>
+                        </span>
+                        <span class="nav-text"> Dashboard </span>
+                    </a>
+                </li>
+                {% endblock default_menu %}
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+{% if show_stars|default:True %}
+<div class="animated-stars">
+    {% for i in "01234567890123456789" %}
+    <div class="shooting-star"></div>
+    {% endfor %}
+</div>
+{% endif %}

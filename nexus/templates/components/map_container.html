@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">{% if title %}{{ title }}{% endif %}</h5>
+        {% if subtitle %}
+        <p class="card-subtitle">{{ subtitle }}</p>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <div>
+            {% if has_margin %}
+            <div class="mb-3">
+            {% endif %}
+                <div id="{{ map_id }}" class="{{ map_class|default:'map-container' }}"
+                     {% if map_height %}style="height: {{ map_height }}px"{% endif %}>
+                     {% if placeholder_text %}
+                     <div class="map-placeholder">{{ placeholder_text }}</div>
+                     {% endif %}
+                </div>
+            {% if has_margin %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
