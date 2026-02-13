@@ -1,13 +1,24 @@
 from django.conf import settings
-from django.contrib import admin
 from django.urls import include, path
+from core.plugin_loader import get_plugin_configs
+from core import views
+
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path('components_app/', include('components_app.urls')),
+    path("portal/", views.portal, name="portal"),
 ]
 
-if settings.DEBUG:
-    import debug_toolbar
 
-    urlpatterns.append(path("__debug__/", include(debug_toolbar.urls)))
+# Load Plugins
+for plugin in get_plugin_configs():
+    if plugin.base_url:
+        try:
+            urlpatterns.append(
+                path(
+                    f"plugins/{plugin.base_url}/",
+                    include(f"{plugin.name}.urls")
+                )
+            )
+        except ModuleNotFoundError:
+            pass
+

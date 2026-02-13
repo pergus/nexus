@@ -1,8 +1,12 @@
 import os
 from pathlib import Path
+from core.plugin_loader import get_plugin_apps
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+#BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+CORE_DIR=BASE_DIR / "core"
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,11 +31,18 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-    "components_app",
 ]
 
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
+
+# Plugins
+PLUGINS = [
+    "plugins.hello"
+]
+
+INSTALLED_APPS += get_plugin_apps()
+
 
 INTERNAL_IPS = ["127.0.0.1", "10.0.1.230"]
 
@@ -54,14 +65,17 @@ ROOT_URLCONF = "core.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            os.path.join(BASE_DIR, "templates"), # Global templates
+            CORE_DIR / "templates"
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
+                "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "components_app.context_processors.sidebar_menu_context",
             ],
         },
     },
@@ -120,7 +134,6 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
     BASE_DIR / "nexus_static"
 ]
 

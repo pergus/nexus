@@ -1,0 +1,57 @@
+{% extends "vertical.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Title -->
+    {% include 'partials/page-title.html' with title="Plugin Portal" breadcrumb=None %}
+
+    <!-- Optional search bar -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <input type="text" id="pluginSearch" class="form-control" placeholder="Search plugins..." onkeyup="filterPlugins()">
+        </div>
+    </div>
+
+    {% comment %} Group plugins by group {% endcomment %}
+    {% regroup plugins by group as plugin_groups %}
+
+    {% for group in plugin_groups %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4 class="text-muted">{{ group.grouper }}</h4>
+        </div>
+    </div>
+
+    <div class="row" id="pluginContainer">
+        {% for plugin in group.list %}
+        <div class="col-md-4 col-sm-6 mb-4 plugin-card">
+            {% include 'components/card.html' with title=plugin.verbose_name subtitle=plugin.description classes="h-100" %}
+            {% block card_content %}
+            <a href="/plugins/{{ plugin.base_url }}/" class="btn btn-primary mt-3 w-100">Launch</a>
+            {% endblock %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function filterPlugins() {
+        var input = document.getElementById('pluginSearch');
+        var filter = input.value.toLowerCase();
+        var cards = document.querySelectorAll('.plugin-card');
+
+        cards.forEach(function (card) {
+            var title = card.querySelector('.card-title').textContent.toLowerCase();
+            if (title.includes(filter)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+{% endblock %}
