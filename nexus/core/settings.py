@@ -1,6 +1,5 @@
 import os
 from pathlib import Path
-from core.plugin_loader import get_plugin_apps
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -31,17 +30,17 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "core",
 ]
 
 if DEBUG:
     INSTALLED_APPS.append("debug_toolbar")
 
-# Plugins
-PLUGINS = [
-    "plugins.hello"
-]
-
-INSTALLED_APPS += get_plugin_apps()
+# Automatically add all plugins in plugins/ folder
+PLUGINS_DIR = BASE_DIR / "plugins"
+for plugin_name in os.listdir(PLUGINS_DIR):
+    if (PLUGINS_DIR / plugin_name).is_dir():
+        INSTALLED_APPS.append(f"plugins.{plugin_name}")
 
 
 INTERNAL_IPS = ["127.0.0.1", "10.0.1.230"]

@@ -19,19 +19,23 @@ Use the Button Link component when you need to:
 {% include 'components/button_link.html' with label="Click Me" url="/some-page" btn_class="btn-primary" %}
 ```
 
+
+
 ## Parameters
 
-| Parameter | Type | Description | Default |
-|-----------|------|-------------|---------|
-| `aria_label` | string | Parameter description | None |
-| `btn_class` | string | Parameter description | None |
-| `button_class` | string | Parameter description | None |
-| `icon` | string | Parameter description | None |
-| `label` | string | Parameter description | None |
-| `outline` | string | Parameter description | None |
-| `size` | string | Parameter description | None |
-| `target` | string | Parameter description | None |
-| `url` | string | Parameter description | None |
+| Parameter      | Type    | Description                                                                          | Default                        |
+| -------------- | ------- | ------------------------------------------------------------------------------------ | ------------------------------ |
+| `aria_label`   | string  | Sets the `aria-label` attribute for accessibility.                                   | None                           |
+| `btn_class`    | string  | Bootstrap button class to control style (e.g., `btn-primary`, `btn-danger`).         | `btn-primary` if not specified |
+| `button_class` | string  | Additional custom CSS classes applied to the button.                                 | None                           |
+| `icon`         | string  | Optional icon class (e.g., FontAwesome) to display inside the button.                | None                           |
+| `label`        | string  | The text label displayed on the button.                                              | `"Button"`                     |
+| `outline`      | string  | Adds an outline style variant, e.g., `primary` will result in `btn-outline-primary`. | None                           |
+| `size`         | string  | Adjusts button size, e.g., `sm` or `lg` → `btn-sm` or `btn-lg`.                      | None                           |
+| `full_width`   | boolean | Makes the button stretch to full container width.                                    | False                          |
+| `target`       | string  | Sets the target attribute for links, e.g., `_blank` to open in a new tab.            | None                           |
+| `url`          | string  | The URL the button links to.                                                         | `#`                            |
+
 
 ## Examples
 

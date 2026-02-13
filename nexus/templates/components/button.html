@@ -2,11 +2,11 @@
 {# Usage: {% include 'components/button.html' with type="primary" text="Click me" size="lg" %} #}
 
 {% if href %}
-  <a href="{{ href }}" class="btn btn-{{ type|default:'primary' }}{% if size %} btn-{{ size }}{% endif %}{% if outline %} btn-outline-{{ type }}{% endif %}{% if soft %} btn-soft-{{ type }}{% endif %}{% if rounded %} rounded-pill{% endif %}{% if width %} width-{{ width }}{% endif %}{% if block %} w-100{% endif %}{% if disabled %} disabled{% endif %}"{% if disabled %} tabindex="-1" aria-disabled="true"{% endif %}>
+  <a href="{{ href }}" class="btn btn-{{ type|default:'primary' }}{% if size %} btn-{{ size }}{% endif %}{% if outline %} btn-outline-{{ type }}{% endif %}{% if soft %} btn-soft-{{ type }}{% endif %}{% if rounded %} rounded-pill{% endif %}{% if width %} width-{{ width }}{% endif %}{% if full_width %} w-100{% endif %}{% if disabled %} disabled{% endif %}"{% if disabled %} tabindex="-1" aria-disabled="true"{% endif %}>
     {% if icon %}<i class="{{ icon }}"></i> {% endif %}{{ text }}
   </a>
 {% else %}
-  <button type="{% if submit %}submit{% else %}button{% endif %}" class="btn btn-{{ type|default:'primary' }}{% if size %} btn-{{ size }}{% endif %}{% if outline %} btn-outline-{{ type }}{% endif %}{% if soft %} btn-soft-{{ type }}{% endif %}{% if rounded %} rounded-pill{% endif %}{% if width %} width-{{ width }}{% endif %}{% if block %} w-100{% endif %}{% if disabled %} disabled{% endif %}"{% if disabled %} disabled{% endif %}>
+  <button type="{% if submit %}submit{% else %}button{% endif %}" class="btn btn-{{ type|default:'primary' }}{% if size %} btn-{{ size }}{% endif %}{% if outline %} btn-outline-{{ type }}{% endif %}{% if soft %} btn-soft-{{ type }}{% endif %}{% if rounded %} rounded-pill{% endif %}{% if width %} width-{{ width }}{% endif %}{% if full_width %} w-100{% endif %}{% if disabled %} disabled{% endif %}"{% if disabled %} disabled{% endif %}>
     {% if icon %}<i class="{{ icon }}"></i> {% endif %}{{ text }}
   </button>
 {% endif %}

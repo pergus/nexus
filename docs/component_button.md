@@ -28,7 +28,7 @@ Use the Button component when you need to:
 | `soft` | boolean | Render as soft style button | False |
 | `rounded` | boolean | Apply rounded corners | False |
 | `width` | string | Width class (xs, sm, md, lg, xl) | None |
-| `block` | boolean | Make button full width | False |
+| `full_width` | boolean | Make button full width | False |
 | `disabled` | boolean | Disable the button | False |
 | `href` | string | If provided, renders as anchor link instead of button | None |
 | `icon` | string | CSS class for icon (e.g., "mdi mdi-plus") | None |

@@ -6,10 +6,11 @@
     <!-- Page Title -->
     {% include 'partials/page-title.html' with title="Plugin Portal" breadcrumb=None %}
 
-    <!-- Optional search bar -->
+    <!-- Search bar -->
     <div class="row mb-4">
         <div class="col-md-6">
-            <input type="text" id="pluginSearch" class="form-control" placeholder="Search plugins..." onkeyup="filterPlugins()">
+            <input type="text" id="pluginSearch" class="form-control" placeholder="Search plugins..."
+                onkeyup="filterPlugins()">
         </div>
     </div>
 
@@ -17,22 +18,33 @@
     {% regroup plugins by group as plugin_groups %}
 
     {% for group in plugin_groups %}
-    <div class="row mb-4">
+    <!-- Group Header -->
+    <div class="row mb-2">
         <div class="col-12">
             <h4 class="text-muted">{{ group.grouper }}</h4>
         </div>
     </div>
 
-    <div class="row" id="pluginContainer">
+    <!-- Plugin Cards -->
+    <div class="row g-4" id="pluginContainer">
         {% for plugin in group.list %}
-        <div class="col-md-4 col-sm-6 mb-4 plugin-card">
-            {% include 'components/card.html' with title=plugin.verbose_name subtitle=plugin.description classes="h-100" %}
-            {% block card_content %}
-            <a href="/plugins/{{ plugin.base_url }}/" class="btn btn-primary mt-3 w-100">Launch</a>
-            {% endblock %}
+        <div class="col-md-4 col-sm-6 d-flex">
+            <div class="card flex-fill plugin-card">
+                <div class="card-header">
+                    <h5 class="card-title">{{ plugin.verbose_name }}</h5>
+                    <p class="card-subtitle">{{ plugin.description }}</p>
+                </div>
+                <div class="card-body">
+                    <div class="card-body d-flex justify-content-start">
+                    {% include 'components/button_link.html' with label="Launch" url="/plugins/"|add:plugin.base_url|add:"/" btn_class="btn-primary" full_width=True %}
+                    </div>
+                </div>
+            </div>
         </div>
         {% endfor %}
     </div>
+
+
     {% endfor %}
 </div>
 {% endblock %}
@@ -45,12 +57,10 @@
         var cards = document.querySelectorAll('.plugin-card');
 
         cards.forEach(function (card) {
-            var title = card.querySelector('.card-title').textContent.toLowerCase();
-            if (title.includes(filter)) {
-                card.style.display = '';
-            } else {
-                card.style.display = 'none';
-            }
+            var titleEl = card.querySelector('.card-title');
+            if (!titleEl) return;
+            var title = titleEl.textContent.toLowerCase();
+            card.style.display = title.includes(filter) ? '' : 'none';
         });
     }
 </script>

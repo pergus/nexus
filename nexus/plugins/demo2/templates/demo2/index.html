@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}{{ plugin.verbose_name }}{% endblock %}
+
+{% block content %}
+<h1>{{ plugin.verbose_name }}</h1>
+<p>{{ plugin.description }}</p>
+{% endblock %}
